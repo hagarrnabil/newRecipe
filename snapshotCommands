@@ -1,0 +1,2 @@
+kubectl get volumesnapshot snapshotname
+kubectl describe volumesnapshot snapshotname
