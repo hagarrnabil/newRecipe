@@ -38,7 +38,7 @@ public class Unit implements Serializable {
     private Integer measurementValue;
     private Integer measurements;
     private Integer measurementsID;
-    private Integer measurementsDescription;
+    private String measurementsDescription;
     private String unitOfMeasurement;
     private Integer pricingTab;
     private String pricePlan;
@@ -48,7 +48,7 @@ public class Unit implements Serializable {
     private String conditionDescription;
     private Integer Amount;
 
-    public Unit(Long unitKey, Long sapUnitID, Integer oldNumber, String description, String unitType, String usageTypeDescription, String unitStatus, String view, Integer floor, Integer toFloor, String blockingReason, Date blockingDate, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, Integer measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount) {
+    public Unit(Long unitKey, Long sapUnitID, Integer oldNumber, String description, String unitType, String usageTypeDescription, String unitStatus, String view, Integer floor, Integer toFloor, String blockingReason, Date blockingDate, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount) {
         this.unitKey = unitKey;
         this.sapUnitID = sapUnitID;
         this.oldNumber = oldNumber;
@@ -271,11 +271,11 @@ public class Unit implements Serializable {
         this.measurementsID = measurementsID;
     }
 
-    public Integer getMeasurementsDescription() {
+    public String getMeasurementsDescription() {
         return measurementsDescription;
     }
 
-    public void setMeasurementsDescription(Integer measurementsDescription) {
+    public void setMeasurementsDescription(String measurementsDescription) {
         this.measurementsDescription = measurementsDescription;
     }
 
@@ -369,7 +369,7 @@ public class Unit implements Serializable {
                 ", measurementValue=" + measurementValue +
                 ", measurements=" + measurements +
                 ", measurementsID=" + measurementsID +
-                ", measurementsDescription=" + measurementsDescription +
+                ", measurementsDescription='" + measurementsDescription + '\'' +
                 ", unitOfMeasurement='" + unitOfMeasurement + '\'' +
                 ", pricingTab=" + pricingTab +
                 ", pricePlan='" + pricePlan + '\'' +

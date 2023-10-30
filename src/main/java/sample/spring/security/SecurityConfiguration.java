@@ -55,13 +55,13 @@ public class SecurityConfiguration {
                                 .requestMatchers("/passwordresets/*").hasAuthority("Read")
                                 .requestMatchers("/users/*").hasAuthority("Read")
                                 .requestMatchers("/paymentplans/*").hasAuthority("Read")
-                        .requestMatchers("/*").authenticated()
-                        .anyRequest().denyAll())
+                                .requestMatchers("/*").authenticated()
+                                .anyRequest().denyAll())
                 .oauth2ResourceServer()
                 .jwt()
                 .jwtAuthenticationConverter(new MyCustomHybridTokenAuthenticationConverter()); // Adjust the converter to represent your use case
-                                            // Use MyCustomHybridTokenAuthenticationConverter when IAS and XSUAA is used
-                                            // Use MyCustomIasTokenAuthenticationConverter when only IAS is used
+        // Use MyCustomHybridTokenAuthenticationConverter when IAS and XSUAA is used
+        // Use MyCustomIasTokenAuthenticationConverter when only IAS is used
         // @formatter:on
         return http.build();
     }
@@ -104,4 +104,3 @@ public class SecurityConfiguration {
         }
     }
 }
-

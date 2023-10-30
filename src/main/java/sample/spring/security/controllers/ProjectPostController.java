@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import sample.spring.security.models.Project;
 import sample.spring.security.repositories.ProjectRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -58,5 +59,16 @@ public class ProjectPostController {
         });
     }
 
+    @RequestMapping(value = "/projects/{projectDescription}", method = RequestMethod.GET)
+    public List<Project> findByText(@PathVariable @NotNull String projectDescription) {
+
+        return projectrepository.findByText(projectDescription);
+    }
+
+    @RequestMapping(value = "/projects", method = RequestMethod.GET)
+    public List<Project> findByCompanyAndLocation(@RequestParam @NotNull String companyCodeDescription, @RequestParam @NotNull String regionalLocation) {
+
+        return projectrepository.findByCompanyDescrAndLocation(companyCodeDescription, regionalLocation);
+    }
 
 }
