@@ -4,8 +4,10 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sample.spring.security.models.Project;
+import sample.spring.security.models.Unit;
 import sample.spring.security.repositories.PaymentPlan;
 
+import java.util.List;
 import java.util.Optional;
 @RestController
 public class PaymentPlanController {
@@ -73,6 +75,20 @@ public class PaymentPlanController {
     }
 
 
+   // @RequestMapping(method = RequestMethod.GET, value = "paymentplans/phase")
+    //@ResponseBody
+    //public List<sample.spring.security.models.PaymentPlan> search(@RequestParam String phase) {
+
+      //  return paymentplan.findByPhase(phase);
+    //}
+
+    @RequestMapping(method = RequestMethod.GET, value = "/paymentplans/paymentPlanDetailsandplanStatus")
+    @ResponseBody
+    public List<sample.spring.security.models.PaymentPlan> Search(
+            @RequestParam String paymentPlanDetails, @RequestParam String planStatus) {
+
+        return paymentplan.findByPaymentPlanDetailsAndPlanStatus(paymentPlanDetails, planStatus);
+    }
 
 }
 

@@ -9,6 +9,7 @@ import sample.spring.security.models.Unit;
 import sample.spring.security.repositories.ProjectRepository;
 import sample.spring.security.repositories.UnitRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -83,4 +84,20 @@ public class UnitPostController {
             newUnit.setUnitKey(unitKey);
             return unitrepository.save(newUnit);
         });
-    }}
+    }
+
+    //@RequestMapping(method = RequestMethod.GET, value = "units/description")
+    //@ResponseBody
+   // public List<Unit> search(@RequestParam String description) {
+
+     //   return unitrepository.findByDescription(description);
+   // }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/units/unitTypeandview")
+    @ResponseBody
+    public List<Unit> Search(@RequestParam String unitType, @RequestParam String view) {
+
+        return unitrepository.findByUnitTypeAndView(unitType, view);
+    }
+
+}

@@ -1,0 +1,39 @@
+server:
+  port: ${PORT:8080}
+
+logging.level:
+  com.sap: DEBUG
+  org.springframework: ERROR
+  org.springframework.security: DEBUG
+  org.springframework.web: DEBUG
+
+#sap.security.services:
+#  identity:
+#    clientid:  sb-clientId!t0815  # SecurityTest.DEFAULT_CLIENT_ID
+#    domains:
+#      - localhost                 # SecurityTest.DEFAULT_DOMAIN
+#  xsuaa:
+#    xsappname: xsapp!t0815        # SecurityTest.DEFAULT_APP_ID
+#    uaadomain: localhost          # SecurityTest.DEFAULT_DOMAIN
+#    clientid:  sb-clientId!t0815  # SecurityTest.DEFAULT_CLIENT_ID
+ #   url:       http://localhost   # SecurityTest.DEFAULT_URL
+
+spring:
+  datasource:
+    password: password
+    #url: jdbc:postgresql://172.17.0.4:5432/postgres
+    username: postgres
+    url: jdbc:postgresql://postgres.demoo.svc.cluster.local:5432/postgres
+ # h2:
+ #   console:
+ #     enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT
+
+
+

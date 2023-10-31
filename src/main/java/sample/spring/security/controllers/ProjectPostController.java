@@ -3,6 +3,7 @@ package sample.spring.security.controllers;
 
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 import sample.spring.security.models.Project;
 import sample.spring.security.repositories.ProjectRepository;
@@ -59,16 +60,20 @@ public class ProjectPostController {
         });
     }
 
-    @RequestMapping(value = "/projects/{projectDescription}", method = RequestMethod.GET)
-    public List<Project> findByText(@PathVariable @NotNull String projectDescription) {
+    @RequestMapping(method = RequestMethod.GET, value = "/projects/projectDescriptionsandregionalLocation")
+    @ResponseBody
+    public List<Project> search(@RequestParam String projectDescription, @RequestParam String regionalLocation) {
 
-        return projectrepository.findByText(projectDescription);
+        return projectrepository.findByProjectDescriptionAndRegionalLocation(projectDescription, regionalLocation);
     }
 
-    @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    public List<Project> findByCompanyAndLocation(@RequestParam @NotNull String companyCodeDescription, @RequestParam @NotNull String regionalLocation) {
 
-        return projectrepository.findByCompanyDescrAndLocation(companyCodeDescription, regionalLocation);
-    }
+   // @RequestMapping(method = RequestMethod.GET, value = "/projects/projectsDescription")
+    //@ResponseBody
+    //public List<Project> Search(@RequestParam String projectDescription) {
+
+  //      return projectrepository.findByProjectDescription(projectDescription);
+   // }
+
 
 }
