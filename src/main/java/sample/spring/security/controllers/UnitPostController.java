@@ -85,19 +85,19 @@ public class UnitPostController {
             return unitrepository.save(newUnit);
         });
     }
-
-    //@RequestMapping(method = RequestMethod.GET, value = "units/description")
-    //@ResponseBody
-   // public List<Unit> search(@RequestParam String description) {
-
-     //   return unitrepository.findByDescription(description);
-   // }
-
+    
     @RequestMapping(method = RequestMethod.GET, value = "/units/unitTypeandview")
     @ResponseBody
     public List<Unit> Search(@RequestParam String unitType, @RequestParam String view) {
 
         return unitrepository.findByUnitTypeAndView(unitType, view);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/units/search")
+    @ResponseBody
+    public List<Unit> Search(@RequestParam String keyword) {
+
+        return unitrepository.search(keyword);
     }
 
 }

@@ -62,18 +62,16 @@ public class ProjectPostController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/projects/projectDescriptionsandregionalLocation")
     @ResponseBody
-    public List<Project> search(@RequestParam String projectDescription, @RequestParam String regionalLocation) {
+    public List<Project> Search(@RequestParam String projectDescription, @RequestParam String regionalLocation) {
 
         return projectrepository.findByProjectDescriptionAndRegionalLocation(projectDescription, regionalLocation);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/projects/search")
+    @ResponseBody
+    public List<Project> Search(@RequestParam String keyword) {
 
-   // @RequestMapping(method = RequestMethod.GET, value = "/projects/projectsDescription")
-    //@ResponseBody
-    //public List<Project> Search(@RequestParam String projectDescription) {
-
-  //      return projectrepository.findByProjectDescription(projectDescription);
-   // }
-
+        return projectrepository.search(keyword);
+    }
 
 }

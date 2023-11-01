@@ -1,14 +1,22 @@
 package sample.spring.security.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
-import sample.spring.security.models.Project;
+import org.springframework.data.jpa.repository.Query;
 import sample.spring.security.models.Unit;
 
-import java.math.BigInteger;
 import java.util.List;
 
 public interface UnitRepository extends JpaRepository<Unit,Long> {
- //   List<Unit> findByDescription(String description);
     List<Unit> findByUnitTypeAndView(String unitType, String view);
+
+    @Query("SELECT u FROM Unit u WHERE CONCAT(u.Amount, ' ', u.blockingDate, ' ', u.blockingReason, ' '," +
+            " u.builtUpArea, ' ', u.conditionCode, ' ', u.conditionDescription, ' ', u.constructionDate" +
+            ", ' ', u.description, ' ', u.destination, ' ', u.fixture, ' ', u.floor, ' ', u.gardenArea, ' '," +
+            "u.measurements, ' ', u.measurementsDescription, ' ', u.measurementsID, ' ' , u.measurementValue" +
+            ", ' ', u.numberOfRooms, ' ', u.oldNumber, ' ', u.orientation, ' ', u.price, ' ', u.pricePlan" +
+            ", ' ' ,u.pricingTab, ' ' , u.salesPhase, ' ' ,u.sapUnitID, ' ', u.toFloor, ' ', u.unitAdditionalPayment" +
+            ", ' ', u.unitKey, ' ', u.unitOfMeasurement, ' ', u.unitStatus, ' ', u.unitType, ' ' ," +
+            "u.usageTypeDescription, ' ', u.view) LIKE %?1%")
+    public List<Unit> search(String keyword);
+
 }

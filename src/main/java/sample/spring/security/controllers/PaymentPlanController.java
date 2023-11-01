@@ -74,20 +74,20 @@ public class PaymentPlanController {
         });
     }
 
-
-   // @RequestMapping(method = RequestMethod.GET, value = "paymentplans/phase")
-    //@ResponseBody
-    //public List<sample.spring.security.models.PaymentPlan> search(@RequestParam String phase) {
-
-      //  return paymentplan.findByPhase(phase);
-    //}
-
     @RequestMapping(method = RequestMethod.GET, value = "/paymentplans/paymentPlanDetailsandplanStatus")
     @ResponseBody
     public List<sample.spring.security.models.PaymentPlan> Search(
             @RequestParam String paymentPlanDetails, @RequestParam String planStatus) {
 
         return paymentplan.findByPaymentPlanDetailsAndPlanStatus(paymentPlanDetails, planStatus);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/paymentplans/search")
+    @ResponseBody
+    public List<sample.spring.security.models.PaymentPlan> Search(
+            @RequestParam String keyword) {
+
+        return paymentplan.search(keyword);
     }
 
 }
