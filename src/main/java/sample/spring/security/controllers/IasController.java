@@ -13,7 +13,7 @@ import java.text.MessageFormat;
 public class IasController {
 
     @PostMapping("/iasUsers")
-    void createUser(String value, String familyName, String givenName, String userName) throws IOException {
+    void createUser() throws IOException {
 
         String url = "'https://aey0y39na.trial-accounts.ondemand.com/scim/Users'";
         String contentType = "Content-Type: application/scim+json";
