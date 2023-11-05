@@ -1,9 +1,9 @@
 package sample.spring.security.controllers;
 
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sample.spring.security.models.IasUser;
+import sample.spring.security.models.IasUser;
 import sample.spring.security.models.Project;
 
 import java.io.*;
@@ -15,8 +15,9 @@ import java.text.MessageFormat;
 @RestController
 public class IasController {
 
-    @PostMapping("/iasUsers")
-    void createUser(String value, String familyName, String givenName, String userName) throws IOException {
+    @RequestMapping(method = RequestMethod.POST, value = "/ias/iasUsers")
+    @ResponseBody
+    void createUser(@RequestBody IasUser ias) throws IOException {
 
         URL url = new URL ("https://aey0y39na.trial-accounts.ondemand.com/service/scim/Users");
         HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -34,17 +35,17 @@ public class IasController {
                 "  \"emails\": [\n" +
                 "    {\n" +
                 "      \"primary\": true,\n" +
-                "      \"value\":" + value + "\n" +
+                "      \"value\":" + ias.getValue() + "\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"name\": {\n" +
-                "    \"familyName\":" + familyName + ",\n" +
-                "    \"givenName\":" + givenName + "\n" +
+                "    \"familyName\":" + ias.getFamilyName() + ",\n" +
+                "    \"givenName\":" + ias.getGivenName() + "\n" +
                 "  },\n" +
                 "  \"schemas\": [\n" +
                 "    \"urn:ietf:params:scim:schemas:core:2.0:User\"\n" +
                 "  ],\n" +
-                "  \"userName\":" + userName + "\n" +
+                "  \"userName\":" + ias.getUserName() + "\n" +
                 "}";
 
         try(OutputStream os = con.getOutputStream()) {

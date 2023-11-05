@@ -12,6 +12,7 @@ sample/spring/security/SecurityConfiguration$MyCustomHybridTokenAuthenticationCo
 sample/spring/security/models/Project.class
 sample/spring/security/repositories/ProjectRepository.class
 sample/spring/security/SecurityConfiguration$MyCustomIasTokenAuthenticationConverter.class
+sample/spring/security/models/IasUser.class
 sample/spring/security/controllers/ProjectPostController.class
 sample/spring/security/controllers/UnitPostController.class
 sample/spring/security/models/Unit.class
