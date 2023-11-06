@@ -3,8 +3,6 @@ package sample.spring.security.controllers;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.bind.annotation.*;
 import sample.spring.security.models.IasUser;
-import sample.spring.security.models.IasUser;
-import sample.spring.security.models.Project;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -15,16 +13,15 @@ import java.text.MessageFormat;
 @RestController
 public class IasController {
 
-    @RequestMapping(method = RequestMethod.POST, value = "/ias/iasUsers")
-    @ResponseBody
-    void createUser(@RequestBody IasUser ias) throws IOException {
+    @PostMapping("/iasUsers")
+    void createUser() throws IOException {
 
-        URL url = new URL ("https://aey0y39na.trial-accounts.ondemand.com/service/scim/Users");
+        URL url = new URL ("https://aosfletgu.trial-accounts.ondemand.com/service/scim/Users");
         HttpURLConnection con = (HttpURLConnection)url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/scim+json");
-        String user = "c75aa7fe-9869-4e24-9144-531b6eb59974";
-        String password = "@kzymnQBmJKfpHLxwr35QqSHkYRttBmoKp";
+        String user = "7173d0ab-b32f-47b2-813e-ae783dae73bf";
+        String password = "rwQ9_LbnS@JYQ235ehgoevnoXT6YJjJ";
         String auth = user + ":" + password;
         byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.UTF_8));
         String authHeaderValue = "Basic " + new String(encodedAuth);
@@ -35,17 +32,17 @@ public class IasController {
                 "  \"emails\": [\n" +
                 "    {\n" +
                 "      \"primary\": true,\n" +
-                "      \"value\":" + ias.getValue() + "\n" +
+                "      \"value\": \"username.example@sap.com\"\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"name\": {\n" +
-                "    \"familyName\":" + ias.getFamilyName() + ",\n" +
-                "    \"givenName\":" + ias.getGivenName() + "\n" +
+                "    \"familyName\": \"Example\",\n" +
+                "    \"givenName\": \"username\"\n" +
                 "  },\n" +
                 "  \"schemas\": [\n" +
                 "    \"urn:ietf:params:scim:schemas:core:2.0:User\"\n" +
                 "  ],\n" +
-                "  \"userName\":" + ias.getUserName() + "\n" +
+                "  \"userName\": \"username\"\n" +
                 "}";
 
         try(OutputStream os = con.getOutputStream()) {

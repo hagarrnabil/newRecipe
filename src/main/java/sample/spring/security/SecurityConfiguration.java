@@ -55,7 +55,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/passwordresets/*").hasAuthority("Read")
                                 .requestMatchers("/users/*").hasAuthority("Read")
                                 .requestMatchers("/paymentplans/*").hasAuthority("Read")
-                                .requestMatchers("/ias/*").hasAuthority("Read")
+                                .requestMatchers("/iasUsers/*").hasAuthority("Read")
                                 .requestMatchers("/*").authenticated()
                                 .anyRequest().denyAll())
                 .oauth2ResourceServer()
