@@ -14,7 +14,7 @@ import java.text.MessageFormat;
 public class IasController {
 
     @PostMapping("/iasUsers")
-    void createUser(@RequestBody IasUser ias) throws IOException {
+    public String createUser(@RequestBody IasUser ias) throws IOException {
 
         URL url = new URL ("https://aosfletgu.trial-accounts.ondemand.com/service/scim/Users");
         HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -28,22 +28,22 @@ public class IasController {
         con.setRequestProperty("Authorization", authHeaderValue);
         con.setRequestProperty("Accept", "application/scim+json");
         con.setDoOutput(true);
-        String jsonInputString = MessageFormat.format("{\n" +
+        String jsonInputString = "{\n" +
                 "  \"emails\": [\n" +
                 "    {\n" +
                 "      \"primary\": true,\n" +
-                "      \"value\": \"{0}\"\n" +
+                "      \"value\": \""+ ias.getValue() +"\"\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"name\": {\n" +
-                "    \"familyName\": \"{1}\",\n" +
-                "    \"givenName\": \"{2}\"\n" +
+                "    \"familyName\": \""+ ias.getFamilyName() +"\",\n" +
+                "    \"givenName\": \""+ ias.getGivenName() +"\"\n" +
                 "  },\n" +
                 "  \"schemas\": [\n" +
                 "    \"urn:ietf:params:scim:schemas:core:2.0:User\"\n" +
                 "  ],\n" +
-                "  \"userName\": \"{3}\"\n" +
-                "}",ias.getValue(),ias.getFamilyName(),ias.getGivenName(),ias.getUserName());
+                "  \"userName\": \""+ ias.getUserName() +"\"\n" +
+                "}";
 
         try(OutputStream os = con.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
@@ -58,6 +58,7 @@ public class IasController {
             }
             System.out.println(response.toString());
         }
+        return jsonInputString;
     }
 }
 
