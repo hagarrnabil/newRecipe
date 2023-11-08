@@ -18,6 +18,7 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -39,7 +40,10 @@ public class SecurityConfiguration {
     @Autowired
     Converter<Jwt, AbstractAuthenticationToken> authConverter; // Required only when Xsuaa is used
 
-
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/iasUsers");
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -51,11 +55,7 @@ public class SecurityConfiguration {
                         authz.requestMatchers("/sayHello").hasAuthority("Read")
                                 .requestMatchers("/units/*").hasAuthority("Read")
                                 .requestMatchers("/projects/*").hasAuthority("Read")
-                                .requestMatchers("/buildings/*").hasAuthority("Read")
-                                .requestMatchers("/passwordresets/*").hasAuthority("Read")
-                                .requestMatchers("/users/*").hasAuthority("Read")
                                 .requestMatchers("/paymentplans/*").hasAuthority("Read")
-                                .requestMatchers("/iasUsers/*").hasAuthority("Read")
                                 .requestMatchers("/*").authenticated()
                                 .anyRequest().denyAll())
                 .oauth2ResourceServer()
