@@ -56,6 +56,8 @@ public class SecurityConfiguration {
                                 .requestMatchers("/units/*").hasAuthority("Read")
                                 .requestMatchers("/projects/*").hasAuthority("Read")
                                 .requestMatchers("/paymentplans/*").hasAuthority("Read")
+                                .requestMatchers("/cities/*").hasAuthority("Read")
+                                .requestMatchers("/companycode/*").hasAuthority("Read")
                                 .requestMatchers("/*").authenticated()
                                 .anyRequest().denyAll())
                 .oauth2ResourceServer()

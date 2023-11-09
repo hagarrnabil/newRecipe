@@ -24,10 +24,10 @@ public class PaymentPlanController {
         return paymentplan.findAll();
     }
 
-    @RequestMapping(value = "/paymentplans/{paymentPlanCode}", method = RequestMethod.GET)
-    public Optional<sample.spring.security.models.PaymentPlan> findByIds(@PathVariable @NotNull Long paymentPlanCode) {
+    @RequestMapping(value = "/paymentplans/{payment_code}", method = RequestMethod.GET)
+    public Optional<sample.spring.security.models.PaymentPlan> findByIds(@PathVariable @NotNull Long payment_code) {
 
-        return paymentplan.findById(paymentPlanCode);
+        return paymentplan.findById(payment_code);
     }
 
     @PostMapping("/paymentplans")
@@ -35,17 +35,18 @@ public class PaymentPlanController {
         return paymentplan.save(newPaymentPlans);
     }
 
-    @DeleteMapping("/paymentplans/{paymentPlanCode}")
-    void deletePaymentPlans(@PathVariable Long paymentPlanCode) {
-        paymentplan.deleteById(paymentPlanCode);
+    @DeleteMapping("/paymentplans/{payment_code}")
+    void deletePaymentPlans(@PathVariable Long payment_code) {
+        paymentplan.deleteById(payment_code);
     }
 
-    @PutMapping("/paymentplans/{paymentPlanCode}")
+    @PutMapping("/paymentplans/{payment_code}")
     sample.spring.security.models.PaymentPlan updatePaymentPlans
             (@RequestBody sample.spring.security.models.PaymentPlan newPaymentPlans,
-             @PathVariable Long paymentPlanCode) {
+             @PathVariable Long payment_code) {
 
-        return paymentplan.findById(paymentPlanCode).map(paymentPlan -> {
+        return paymentplan.findById(payment_code).map(paymentPlan -> {
+            paymentPlan.setPayment_code(newPaymentPlans.getPayment_code());
             paymentPlan.setPaymentPlanCode(newPaymentPlans.getPaymentPlanCode());
             paymentPlan.setPaymentPlanDescription(newPaymentPlans.getPaymentPlanDescription());
             paymentPlan.setConditionGroup(newPaymentPlans.getConditionGroup());
@@ -69,7 +70,7 @@ public class PaymentPlanController {
             paymentPlan.setNoOfInstallments(newPaymentPlans.getNoOfInstallments());
             return paymentplan.save(newPaymentPlans);
         }).orElseGet(() -> {
-            newPaymentPlans.setPaymentPlanCode(paymentPlanCode);
+            newPaymentPlans.setPayment_code(payment_code);
             return paymentplan.save(newPaymentPlans);
         });
     }

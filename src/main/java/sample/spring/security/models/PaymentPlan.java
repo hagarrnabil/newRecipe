@@ -1,7 +1,11 @@
 package sample.spring.security.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,11 +14,18 @@ import java.util.Date;
 public class PaymentPlan implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "paymentPlanCode")
-    private Long paymentPlanCode;
+    @Column(name = "payment_code")
+    private Long payment_code;
+    @NotNull
+    @Column(unique = true)
+    private char paymentPlanCode;
+    @NotNull
     private String paymentPlanDescription;
     private String conditionGroup;
     private String assignedPricePlan;
+    @NotNull
+    @Range(min = 1)
+    @JsonProperty("no_of_years")
     private Integer noOfYears;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
@@ -35,7 +46,8 @@ public class PaymentPlan implements Serializable {
     private String dueOnInMonth;
     private Integer noOfInstallments;
 
-    public PaymentPlan(Long paymentPlanCode, String paymentPlanDescription, String conditionGroup, String assignedPricePlan, Integer noOfYears, Date validFrom, Date validTo, Integer maintenanceNumberOfMonth, String installmentCalculationMethod, String phase, String planStatus, String approvalStatus, String assignedProjectsTab, String paymentPlanDetails, String conditionType, String conditionPercentage, Integer conditionBasePrice, String calculationMethod, String frequency, String dueOnInMonth, Integer noOfInstallments) {
+    public PaymentPlan(Long payment_code, char paymentPlanCode, String paymentPlanDescription, String conditionGroup, String assignedPricePlan, Integer noOfYears, Date validFrom, Date validTo, Integer maintenanceNumberOfMonth, String installmentCalculationMethod, String phase, String planStatus, String approvalStatus, String assignedProjectsTab, String paymentPlanDetails, String conditionType, String conditionPercentage, Integer conditionBasePrice, String calculationMethod, String frequency, String dueOnInMonth, Integer noOfInstallments) {
+        this.payment_code = payment_code;
         this.paymentPlanCode = paymentPlanCode;
         this.paymentPlanDescription = paymentPlanDescription;
         this.conditionGroup = conditionGroup;
@@ -63,11 +75,19 @@ public class PaymentPlan implements Serializable {
 
     }
 
-    public Long getPaymentPlanCode() {
+    public Long getPayment_code() {
+        return payment_code;
+    }
+
+    public void setPayment_code(Long payment_code) {
+        this.payment_code = payment_code;
+    }
+
+    public char getPaymentPlanCode() {
         return paymentPlanCode;
     }
 
-    public void setPaymentPlanCode(Long paymentPlanCode) {
+    public void setPaymentPlanCode(char paymentPlanCode) {
         this.paymentPlanCode = paymentPlanCode;
     }
 
@@ -234,7 +254,8 @@ public class PaymentPlan implements Serializable {
     @Override
     public String toString() {
         return "PaymentPlan{" +
-                "paymentPlanCode=" + paymentPlanCode +
+                "payment_code=" + payment_code +
+                ", paymentPlanCode=" + paymentPlanCode +
                 ", paymentPlanDescription='" + paymentPlanDescription + '\'' +
                 ", conditionGroup='" + conditionGroup + '\'' +
                 ", assignedPricePlan='" + assignedPricePlan + '\'' +

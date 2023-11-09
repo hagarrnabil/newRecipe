@@ -27,10 +27,10 @@ public class ProjectPostController {
         return projectrepository.findAll();
     }
 
-    @RequestMapping(value = "/projects/{projectID}", method = RequestMethod.GET)
-    public Optional<Project> findByIds(@PathVariable @NotNull Long projectID) {
+    @RequestMapping(value = "/projects/{project_code}", method = RequestMethod.GET)
+    public Optional<Project> findByIds(@PathVariable @NotNull Long project_code) {
 
-        return projectrepository.findById(projectID);
+        return projectrepository.findById(project_code);
     }
 
     @PostMapping("/projects")
@@ -38,15 +38,16 @@ public class ProjectPostController {
         return projectrepository.save(newProject);
     }
 
-    @DeleteMapping("/projects/{projectID}")
-    void deleteProject(@PathVariable Long projectID) {
-        projectrepository.deleteById(projectID);
+    @DeleteMapping("/projects/{project_code}")
+    void deleteProject(@PathVariable Long project_code) {
+        projectrepository.deleteById(project_code);
     }
 
-    @PutMapping("/projects/{projectID}")
-    Project updateProject(@RequestBody Project newProject, @PathVariable Long projectID) {
+    @PutMapping("/projects/{project_code}")
+    Project updateProject(@RequestBody Project newProject, @PathVariable Long project_code) {
 
-        return projectrepository.findById(projectID).map(project -> {
+        return projectrepository.findById(project_code).map(project -> {
+            project.setProject_code(newProject.getProject_code());
             project.setProjectID(newProject.getProjectID());
             project.setProjectDescription(newProject.getProjectDescription());
             project.setCompanyCodeDescription(newProject.getCompanyCodeDescription());
@@ -55,7 +56,7 @@ public class ProjectPostController {
             project.setCompanyCodeID(newProject.getCompanyCodeID());
             return projectrepository.save(newProject);
         }).orElseGet(() -> {
-            newProject.setProjectID(projectID);
+            newProject.setProject_code(project_code);
             return projectrepository.save(newProject);
         });
     }

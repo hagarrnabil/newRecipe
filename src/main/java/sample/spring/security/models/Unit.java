@@ -2,8 +2,11 @@ package sample.spring.security.models;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,9 +16,14 @@ import java.util.Date;
 public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long unitKey;
-    private Long sapUnitID;
+    @Column(name = "unit_code")
+    private Long unit_code;
+    @NotNull
+    @Column(unique = true)
+    private char unitKey;
+
     private Integer oldNumber;
+    @NotNull
     private String description;
     private String unitType;
     private String usageTypeDescription;
@@ -23,9 +31,9 @@ public class Unit implements Serializable {
     private String view;
     private Integer floor;
     private Integer toFloor;
-    private String blockingReason;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date blockingDate;
+    private String blockingReason;
     private String fixture;
     private String salesPhase;
     @JsonFormat(pattern="yyyy-MM-dd")
@@ -34,6 +42,9 @@ public class Unit implements Serializable {
     private String orientation;
     private String builtUpArea;
     private String gardenArea;
+    @NotNull
+    @Range(min = 1)
+    @JsonProperty("no_of_rooms")
     private Integer numberOfRooms;
     private Integer measurementValue;
     private Integer measurements;
@@ -48,9 +59,9 @@ public class Unit implements Serializable {
     private String conditionDescription;
     private Integer Amount;
 
-    public Unit(Long unitKey, Long sapUnitID, Integer oldNumber, String description, String unitType, String usageTypeDescription, String unitStatus, String view, Integer floor, Integer toFloor, String blockingReason, Date blockingDate, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount) {
+    public Unit(Long unit_code, char unitKey, Integer oldNumber, String description, String unitType, String usageTypeDescription, String unitStatus, String view, Integer floor, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount) {
+        this.unit_code = unit_code;
         this.unitKey = unitKey;
-        this.sapUnitID = sapUnitID;
         this.oldNumber = oldNumber;
         this.description = description;
         this.unitType = unitType;
@@ -59,8 +70,8 @@ public class Unit implements Serializable {
         this.view = view;
         this.floor = floor;
         this.toFloor = toFloor;
-        this.blockingReason = blockingReason;
         this.blockingDate = blockingDate;
+        this.blockingReason = blockingReason;
         this.fixture = fixture;
         this.salesPhase = salesPhase;
         this.constructionDate = constructionDate;
@@ -87,20 +98,20 @@ public class Unit implements Serializable {
 
     }
 
-    public Long getUnitKey() {
+    public Long getUnit_code() {
+        return unit_code;
+    }
+
+    public void setUnit_code(Long unit_code) {
+        this.unit_code = unit_code;
+    }
+
+    public char getUnitKey() {
         return unitKey;
     }
 
-    public void setUnitKey(Long unitKey) {
+    public void setUnitKey(char unitKey) {
         this.unitKey = unitKey;
-    }
-
-    public Long getSapUnitID() {
-        return sapUnitID;
-    }
-
-    public void setSapUnitID(Long sapUnitID) {
-        this.sapUnitID = sapUnitID;
     }
 
     public Integer getOldNumber() {
@@ -346,8 +357,8 @@ public class Unit implements Serializable {
     @Override
     public String toString() {
         return "Unit{" +
-                "unitKey=" + unitKey +
-                ", sapUnitID=" + sapUnitID +
+                "unit_code=" + unit_code +
+                ", unitKey=" + unitKey +
                 ", oldNumber=" + oldNumber +
                 ", description='" + description + '\'' +
                 ", unitType='" + unitType + '\'' +
@@ -356,8 +367,8 @@ public class Unit implements Serializable {
                 ", view='" + view + '\'' +
                 ", floor=" + floor +
                 ", toFloor=" + toFloor +
-                ", blockingReason='" + blockingReason + '\'' +
                 ", blockingDate=" + blockingDate +
+                ", blockingReason='" + blockingReason + '\'' +
                 ", fixture='" + fixture + '\'' +
                 ", salesPhase='" + salesPhase + '\'' +
                 ", constructionDate=" + constructionDate +

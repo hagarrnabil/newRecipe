@@ -11,7 +11,7 @@ public interface PaymentPlan extends JpaRepository<sample.spring.security.models
           " p.assignedProjectsTab, ' ', p.calculationMethod, ' ', p.conditionBasePrice, ' ', p.conditionGroup" +
             ", ' ', p.conditionPercentage, ' ',p.dueOnInMonth,' ', p.conditionType, ' ', p.frequency, ' '," +
             "p.installmentCalculationMethod,' ' ,p.maintenanceNumberOfMonth, ' ',p.noOfInstallments, ' '," +
-            "p.noOfYears,' ',p.paymentPlanCode,' ',p.paymentPlanDescription,' ' ,p.paymentPlanDetails, ' '," +
+            "p.noOfYears,' ',p.payment_code,' ',p.paymentPlanCode,' ',p.paymentPlanDescription,' ' ,p.paymentPlanDetails, ' '," +
             "p.Phase, ' ',p.planStatus,' ',p.validTo) LIKE %?1%")
     public List<sample.spring.security.models.PaymentPlan> search(String keyword);
 }

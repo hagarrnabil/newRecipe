@@ -28,10 +28,10 @@ public class UnitPostController {
         return unitrepository.findAll();
     }
 
-    @RequestMapping(value = "/units/{unitKey}", method = RequestMethod.GET)
-    public Optional<Unit> findByIds(@PathVariable @NotNull Long unitKey) {
+    @RequestMapping(value = "/units/{unit_code}", method = RequestMethod.GET)
+    public Optional<Unit> findByIds(@PathVariable @NotNull Long unit_code) {
 
-        return unitrepository.findById(unitKey);
+        return unitrepository.findById(unit_code);
     }
 
     @PostMapping("/units")
@@ -39,15 +39,15 @@ public class UnitPostController {
         return unitrepository.save(newUnit);
     }
 
-    @DeleteMapping("/units/{unitKey}")
-    void deleteUnit(@PathVariable Long unitKey) {
-        unitrepository.deleteById(unitKey);
+    @DeleteMapping("/units/{unit_code}")
+    void deleteUnit(@PathVariable Long unit_code) {
+        unitrepository.deleteById(unit_code);
     }
 
-    @PutMapping("/units/{unitKey}")
-    Unit updateUnit(@RequestBody Unit newUnit, @PathVariable Long unitKey) {
+    @PutMapping("/units/{unit_code}")
+    Unit updateUnit(@RequestBody Unit newUnit, @PathVariable Long unit_code) {
 
-        return unitrepository.findById(unitKey).map(unit -> {
+        return unitrepository.findById(unit_code).map(unit -> {
             unit.setAmount(newUnit.getAmount());
             unit.setUnitOfMeasurement(newUnit.getUnitOfMeasurement());
             unit.setDescription(newUnit.getDescription());
@@ -74,14 +74,15 @@ public class UnitPostController {
             unit.setPricePlan(newUnit.getPricePlan());
             unit.setPricingTab(newUnit.getPricingTab());
             unit.setSalesPhase(newUnit.getSalesPhase());
-            unit.setSapUnitID(newUnit.getSapUnitID());
             unit.setToFloor(newUnit.getToFloor());
             unit.setUnitAdditionalPayment(newUnit.getUnitAdditionalPayment());
             unit.setUsageTypeDescription(newUnit.getUsageTypeDescription());
             unit.setView(newUnit.getView());
+            unit.setUnit_code(newUnit.getUnit_code());
+            unit.setUnitKey(newUnit.getUnitKey());
             return unitrepository.save(newUnit);
         }).orElseGet(() -> {
-            newUnit.setUnitKey(unitKey);
+            newUnit.setUnit_code(unit_code);
             return unitrepository.save(newUnit);
         });
     }

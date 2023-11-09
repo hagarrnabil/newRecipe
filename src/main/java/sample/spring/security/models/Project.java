@@ -3,6 +3,8 @@ package sample.spring.security.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.io.Serializable;
 import java.util.*;
@@ -13,8 +15,13 @@ public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "projectID")
-    private Long projectID;
+    @Column(name = "project_code")
+    private Long project_code;
+
+    @NotNull
+    @Column(unique = true)
+    private char projectID;
+    @NotNull
     private String projectDescription;
     private Integer companyCodeID;
     private String companyCodeDescription;
@@ -22,7 +29,8 @@ public class Project implements Serializable {
     private Date validFrom;
     private String regionalLocation;
 
-    public Project(Long projectID, String projectDescription, Integer companyCodeID, String companyCodeDescription, Date validFrom, String regionalLocation) {
+    public Project(Long project_code, char projectID, String projectDescription, Integer companyCodeID, String companyCodeDescription, Date validFrom, String regionalLocation) {
+        this.project_code = project_code;
         this.projectID = projectID;
         this.projectDescription = projectDescription;
         this.companyCodeID = companyCodeID;
@@ -35,11 +43,19 @@ public class Project implements Serializable {
 
     }
 
-    public Long getProjectID() {
+    public Long getProject_code() {
+        return project_code;
+    }
+
+    public void setProject_code(Long project_code) {
+        this.project_code = project_code;
+    }
+
+    public char getProjectID() {
         return projectID;
     }
 
-    public void setProjectID(Long projectID) {
+    public void setProjectID(char projectID) {
         this.projectID = projectID;
     }
 
@@ -86,7 +102,8 @@ public class Project implements Serializable {
     @Override
     public String toString() {
         return "Project{" +
-                "projectID=" + projectID +
+                "project_code=" + project_code +
+                ", projectID=" + projectID +
                 ", projectDescription='" + projectDescription + '\'' +
                 ", companyCodeID=" + companyCodeID +
                 ", companyCodeDescription='" + companyCodeDescription + '\'' +
