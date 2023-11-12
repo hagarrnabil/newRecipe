@@ -1,9 +1,6 @@
 package sample.spring.security.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
@@ -38,8 +35,10 @@ public class Project implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("company_code")
     private CompanyCode companyCode;
+    @OneToMany(mappedBy = "project")
+    private final Set<Unit> units;
 
-    public Project(Long project_code, String projectID, String projectDescription, Integer companyCodeID, String companyCodeDescription, Date validFrom, String regionalLocation) {
+    public Project(Long project_code, String projectID, String projectDescription, Integer companyCodeID, String companyCodeDescription, Date validFrom, String regionalLocation, Set<Unit> units) {
         this.project_code = project_code;
         this.projectID = projectID;
         this.projectDescription = projectDescription;
@@ -47,10 +46,12 @@ public class Project implements Serializable {
         this.companyCodeDescription = companyCodeDescription;
         this.validFrom = validFrom;
         this.regionalLocation = regionalLocation;
+        this.units = units;
     }
 
     public Project() {
 
+        units = null;
     }
 
     public Long getProject_code() {
@@ -91,6 +92,10 @@ public class Project implements Serializable {
     @JsonBackReference
     public void setCompanyCode(CompanyCode companyCode) {
         this.companyCode = companyCode;
+    }
+    @JsonManagedReference
+    public Set<Unit> getUnits() {
+        return units;
     }
 
     public String getCompanyCodeDescription() {

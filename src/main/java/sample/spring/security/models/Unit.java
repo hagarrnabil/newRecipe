@@ -66,6 +66,11 @@ public class Unit implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("company_code")
     private CompanyCode companyCode;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "project_code", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty("project_code")
+    private Project project;
 
     public Unit(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, String usageTypeDescription, String unitStatus, String view, Integer floor, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount) {
         this.unit_code = unit_code;
@@ -367,6 +372,14 @@ public class Unit implements Serializable {
     @JsonBackReference
     public void setCompanyCode(CompanyCode companyCode) {
         this.companyCode = companyCode;
+    }
+    @JsonBackReference
+    public Project getProject() {
+        return project;
+    }
+    @JsonBackReference
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     @Override
