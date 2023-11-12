@@ -14,6 +14,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="units")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -60,6 +61,11 @@ public class Unit implements Serializable {
     private String conditionCode;
     private String conditionDescription;
     private Integer Amount;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_code", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty("company_code")
+    private CompanyCode companyCode;
 
     public Unit(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, String usageTypeDescription, String unitStatus, String view, Integer floor, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount) {
         this.unit_code = unit_code;
@@ -353,6 +359,14 @@ public class Unit implements Serializable {
 
     public void setAmount(Integer amount) {
         Amount = amount;
+    }
+    @JsonBackReference
+    public CompanyCode getCompanyCode() {
+        return companyCode;
+    }
+    @JsonBackReference
+    public void setCompanyCode(CompanyCode companyCode) {
+        this.companyCode = companyCode;
     }
 
     @Override

@@ -1,10 +1,12 @@
 package sample.spring.security.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "companyCode")
@@ -19,15 +21,22 @@ public class CompanyCode implements Serializable {
     private String companyCodeID;
     @NotNull
     private String companyCodeDescription;
+    @OneToMany(mappedBy = "companycode")
+    private final Set<Project> projects;
+    @OneToMany(mappedBy = "companycode")
+    private final Set<Unit> units;
 
     public CompanyCode() {
+        projects = null;
+        units = null;
     }
 
-
-    public CompanyCode(Long company_code, String companyCodeID, String companyCodeDescription) {
+    public CompanyCode(Long company_code, String companyCodeID, String companyCodeDescription, Set<Project> projects, Set<Unit> units) {
         this.company_code = company_code;
         this.companyCodeID = companyCodeID;
         this.companyCodeDescription = companyCodeDescription;
+        this.projects = projects;
+        this.units = units;
     }
 
     public Long getCompany_code() {
@@ -52,6 +61,14 @@ public class CompanyCode implements Serializable {
 
     public void setCompanyCodeDescription(String companyCodeDescription) {
         this.companyCodeDescription = companyCodeDescription;
+    }
+    @JsonManagedReference
+    public Set<Project> getProjects() {
+        return projects;
+    }
+    @JsonManagedReference
+    public Set<Unit> getUnits() {
+        return units;
     }
 
     @Override

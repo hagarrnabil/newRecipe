@@ -1,10 +1,13 @@
 package sample.spring.security.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -12,6 +15,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "projects")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Project implements Serializable {
 
     @Id
@@ -24,17 +28,22 @@ public class Project implements Serializable {
     private String projectID;
     @NotNull
     private String projectDescription;
-    private Integer companyCodeID;
+    //private Integer companyCodeID;
     private String companyCodeDescription;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
     private String regionalLocation;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_code", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty("company_code")
+    private CompanyCode companyCode;
 
     public Project(Long project_code, String projectID, String projectDescription, Integer companyCodeID, String companyCodeDescription, Date validFrom, String regionalLocation) {
         this.project_code = project_code;
         this.projectID = projectID;
         this.projectDescription = projectDescription;
-        this.companyCodeID = companyCodeID;
+        //this.companyCodeID = companyCodeID;
         this.companyCodeDescription = companyCodeDescription;
         this.validFrom = validFrom;
         this.regionalLocation = regionalLocation;
@@ -68,12 +77,20 @@ public class Project implements Serializable {
         this.projectDescription = projectDescription;
     }
 
-    public Integer getCompanyCodeID() {
-        return companyCodeID;
+//    public Integer getCompanyCodeID() {
+//        return companyCodeID;
+//    }
+//
+//    public void setCompanyCodeID(Integer companyCodeID) {
+//        this.companyCodeID = companyCodeID;
+//    }
+    @JsonBackReference
+    public CompanyCode getCompanyCode() {
+        return companyCode;
     }
-
-    public void setCompanyCodeID(Integer companyCodeID) {
-        this.companyCodeID = companyCodeID;
+    @JsonBackReference
+    public void setCompanyCode(CompanyCode companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getCompanyCodeDescription() {
@@ -106,7 +123,7 @@ public class Project implements Serializable {
                 "project_code=" + project_code +
                 ", projectID='" + projectID + '\'' +
                 ", projectDescription='" + projectDescription + '\'' +
-                ", companyCodeID=" + companyCodeID +
+//                ", companyCodeID=" + companyCodeID +
                 ", companyCodeDescription='" + companyCodeDescription + '\'' +
                 ", validFrom=" + validFrom +
                 ", regionalLocation='" + regionalLocation + '\'' +
