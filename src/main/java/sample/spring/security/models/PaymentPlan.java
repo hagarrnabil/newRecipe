@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
@@ -16,9 +17,9 @@ public class PaymentPlan implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "payment_code")
     private Long payment_code;
-    @NotNull
-    @Column(unique = true)
-    private char paymentPlanCode;
+    @Column(unique = true, length = 8, columnDefinition = "char(8)", nullable = false)
+    @Length(max = 8)
+    private String paymentPlanCode;
     @NotNull
     private String paymentPlanDescription;
     private String conditionGroup;
@@ -46,7 +47,11 @@ public class PaymentPlan implements Serializable {
     private String dueOnInMonth;
     private Integer noOfInstallments;
 
-    public PaymentPlan(Long payment_code, char paymentPlanCode, String paymentPlanDescription, String conditionGroup, String assignedPricePlan, Integer noOfYears, Date validFrom, Date validTo, Integer maintenanceNumberOfMonth, String installmentCalculationMethod, String phase, String planStatus, String approvalStatus, String assignedProjectsTab, String paymentPlanDetails, String conditionType, String conditionPercentage, Integer conditionBasePrice, String calculationMethod, String frequency, String dueOnInMonth, Integer noOfInstallments) {
+    public PaymentPlan() {
+
+    }
+
+    public PaymentPlan(Long payment_code, String paymentPlanCode, String paymentPlanDescription, String conditionGroup, String assignedPricePlan, Integer noOfYears, Date validFrom, Date validTo, Integer maintenanceNumberOfMonth, String installmentCalculationMethod, String phase, String planStatus, String approvalStatus, String assignedProjectsTab, String paymentPlanDetails, String conditionType, String conditionPercentage, Integer conditionBasePrice, String calculationMethod, String frequency, String dueOnInMonth, Integer noOfInstallments) {
         this.payment_code = payment_code;
         this.paymentPlanCode = paymentPlanCode;
         this.paymentPlanDescription = paymentPlanDescription;
@@ -71,10 +76,6 @@ public class PaymentPlan implements Serializable {
         this.noOfInstallments = noOfInstallments;
     }
 
-    public PaymentPlan() {
-
-    }
-
     public Long getPayment_code() {
         return payment_code;
     }
@@ -83,11 +84,11 @@ public class PaymentPlan implements Serializable {
         this.payment_code = payment_code;
     }
 
-    public char getPaymentPlanCode() {
+    public String getPaymentPlanCode() {
         return paymentPlanCode;
     }
 
-    public void setPaymentPlanCode(char paymentPlanCode) {
+    public void setPaymentPlanCode(String paymentPlanCode) {
         this.paymentPlanCode = paymentPlanCode;
     }
 
@@ -251,31 +252,5 @@ public class PaymentPlan implements Serializable {
         this.noOfInstallments = noOfInstallments;
     }
 
-    @Override
-    public String toString() {
-        return "PaymentPlan{" +
-                "payment_code=" + payment_code +
-                ", paymentPlanCode=" + paymentPlanCode +
-                ", paymentPlanDescription='" + paymentPlanDescription + '\'' +
-                ", conditionGroup='" + conditionGroup + '\'' +
-                ", assignedPricePlan='" + assignedPricePlan + '\'' +
-                ", noOfYears=" + noOfYears +
-                ", validFrom=" + validFrom +
-                ", validTo=" + validTo +
-                ", maintenanceNumberOfMonth=" + maintenanceNumberOfMonth +
-                ", installmentCalculationMethod='" + installmentCalculationMethod + '\'' +
-                ", Phase='" + Phase + '\'' +
-                ", planStatus='" + planStatus + '\'' +
-                ", approvalStatus='" + approvalStatus + '\'' +
-                ", assignedProjectsTab='" + assignedProjectsTab + '\'' +
-                ", paymentPlanDetails='" + paymentPlanDetails + '\'' +
-                ", conditionType='" + conditionType + '\'' +
-                ", conditionPercentage='" + conditionPercentage + '\'' +
-                ", conditionBasePrice=" + conditionBasePrice +
-                ", calculationMethod='" + calculationMethod + '\'' +
-                ", frequency='" + frequency + '\'' +
-                ", dueOnInMonth='" + dueOnInMonth + '\'' +
-                ", noOfInstallments=" + noOfInstallments +
-                '}';
-    }
+
 }

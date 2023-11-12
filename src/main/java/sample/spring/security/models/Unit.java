@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
@@ -18,9 +19,10 @@ public class Unit implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "unit_code")
     private Long unit_code;
-    @NotNull
-    @Column(unique = true)
-    private char unitKey;
+
+    @Column(unique = true, length = 8, columnDefinition = "char(8)", nullable = false)
+    @Length(max = 8)
+    private String unitKey;
 
     private Integer oldNumber;
     @NotNull
@@ -59,7 +61,7 @@ public class Unit implements Serializable {
     private String conditionDescription;
     private Integer Amount;
 
-    public Unit(Long unit_code, char unitKey, Integer oldNumber, String description, String unitType, String usageTypeDescription, String unitStatus, String view, Integer floor, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount) {
+    public Unit(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, String usageTypeDescription, String unitStatus, String view, Integer floor, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount) {
         this.unit_code = unit_code;
         this.unitKey = unitKey;
         this.oldNumber = oldNumber;
@@ -106,14 +108,13 @@ public class Unit implements Serializable {
         this.unit_code = unit_code;
     }
 
-    public char getUnitKey() {
+    public String getUnitKey() {
         return unitKey;
     }
 
-    public void setUnitKey(char unitKey) {
+    public void setUnitKey(String unitKey) {
         this.unitKey = unitKey;
     }
-
     public Integer getOldNumber() {
         return oldNumber;
     }
@@ -358,7 +359,7 @@ public class Unit implements Serializable {
     public String toString() {
         return "Unit{" +
                 "unit_code=" + unit_code +
-                ", unitKey=" + unitKey +
+                ", unitKey='" + unitKey + '\'' +
                 ", oldNumber=" + oldNumber +
                 ", description='" + description + '\'' +
                 ", unitType='" + unitType + '\'' +

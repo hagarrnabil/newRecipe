@@ -80,6 +80,7 @@ public class UnitPostController {
             unit.setView(newUnit.getView());
             unit.setUnit_code(newUnit.getUnit_code());
             unit.setUnitKey(newUnit.getUnitKey());
+            unit.setMeasurements(newUnit.getMeasurements());
             return unitrepository.save(newUnit);
         }).orElseGet(() -> {
             newUnit.setUnit_code(unit_code);

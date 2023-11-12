@@ -2,6 +2,7 @@ package sample.spring.security.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
@@ -13,9 +14,9 @@ public class CompanyCode implements Serializable {
     @Column(name = "company_code")
     private Long company_code;
 
-    @NotNull
-    @Column(unique = true)
-    private char companyCodeID;
+    @Column(unique = true, length = 8, columnDefinition = "char(8)", nullable = false)
+    @Length(max = 8)
+    private String companyCodeID;
     @NotNull
     private String companyCodeDescription;
 
@@ -23,12 +24,11 @@ public class CompanyCode implements Serializable {
     }
 
 
-    public CompanyCode(Long company_code, char companyCodeID, String companyCodeDescription) {
+    public CompanyCode(Long company_code, String companyCodeID, String companyCodeDescription) {
         this.company_code = company_code;
         this.companyCodeID = companyCodeID;
         this.companyCodeDescription = companyCodeDescription;
     }
-
 
     public Long getCompany_code() {
         return company_code;
@@ -38,11 +38,11 @@ public class CompanyCode implements Serializable {
         this.company_code = company_code;
     }
 
-    public char getCompanyCodeID() {
+    public String getCompanyCodeID() {
         return companyCodeID;
     }
 
-    public void setCompanyCodeID(char companyCodeID) {
+    public void setCompanyCodeID(String companyCodeID) {
         this.companyCodeID = companyCodeID;
     }
 
@@ -58,7 +58,7 @@ public class CompanyCode implements Serializable {
     public String toString() {
         return "CompanyCode{" +
                 "company_code=" + company_code +
-                ", companyCodeID=" + companyCodeID +
+                ", companyCodeID='" + companyCodeID + '\'' +
                 ", companyCodeDescription='" + companyCodeDescription + '\'' +
                 '}';
     }

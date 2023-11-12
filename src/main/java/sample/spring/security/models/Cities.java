@@ -2,6 +2,7 @@ package sample.spring.security.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
@@ -13,16 +14,16 @@ public class Cities implements Serializable {
     @Column(name = "cities_code")
     private Long cities_code;
 
-    @NotNull
-    @Column(unique = true)
-    private char citiesID;
+    @Column(unique = true, length = 8, columnDefinition = "char(8)", nullable = false)
+    @Length(max = 8)
+    private String citiesID;
     @NotNull
     private String regionalLocation;
 
     public Cities() {
     }
 
-    public Cities(Long cities_code, char citiesID, String regionalLocation) {
+    public Cities(Long cities_code, String citiesID, String regionalLocation) {
         this.cities_code = cities_code;
         this.citiesID = citiesID;
         this.regionalLocation = regionalLocation;
@@ -36,11 +37,11 @@ public class Cities implements Serializable {
         this.cities_code = cities_code;
     }
 
-    public char getCitiesID() {
+    public String getCitiesID() {
         return citiesID;
     }
 
-    public void setCitiesID(char citiesID) {
+    public void setCitiesID(String citiesID) {
         this.citiesID = citiesID;
     }
 
@@ -56,7 +57,7 @@ public class Cities implements Serializable {
     public String toString() {
         return "Cities{" +
                 "cities_code=" + cities_code +
-                ", citiesID=" + citiesID +
+                ", citiesID='" + citiesID + '\'' +
                 ", regionalLocation='" + regionalLocation + '\'' +
                 '}';
     }

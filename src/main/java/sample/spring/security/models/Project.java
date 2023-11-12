@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.util.*;
@@ -18,9 +19,9 @@ public class Project implements Serializable {
     @Column(name = "project_code")
     private Long project_code;
 
-    @NotNull
-    @Column(unique = true)
-    private char projectID;
+    @Column(unique = true, length = 8, columnDefinition = "char(8)", nullable = false)
+    @Length(max = 8)
+    private String projectID;
     @NotNull
     private String projectDescription;
     private Integer companyCodeID;
@@ -29,7 +30,7 @@ public class Project implements Serializable {
     private Date validFrom;
     private String regionalLocation;
 
-    public Project(Long project_code, char projectID, String projectDescription, Integer companyCodeID, String companyCodeDescription, Date validFrom, String regionalLocation) {
+    public Project(Long project_code, String projectID, String projectDescription, Integer companyCodeID, String companyCodeDescription, Date validFrom, String regionalLocation) {
         this.project_code = project_code;
         this.projectID = projectID;
         this.projectDescription = projectDescription;
@@ -51,11 +52,11 @@ public class Project implements Serializable {
         this.project_code = project_code;
     }
 
-    public char getProjectID() {
+    public String getProjectID() {
         return projectID;
     }
 
-    public void setProjectID(char projectID) {
+    public void setProjectID(String projectID) {
         this.projectID = projectID;
     }
 
@@ -103,7 +104,7 @@ public class Project implements Serializable {
     public String toString() {
         return "Project{" +
                 "project_code=" + project_code +
-                ", projectID=" + projectID +
+                ", projectID='" + projectID + '\'' +
                 ", projectDescription='" + projectDescription + '\'' +
                 ", companyCodeID=" + companyCodeID +
                 ", companyCodeDescription='" + companyCodeDescription + '\'' +

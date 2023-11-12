@@ -24,12 +24,15 @@ spring:
 #    url: jdbc:postgresql://172.17.0.4:5432/postgres
     username: postgres
     url: jdbc:postgresql://postgres.demooo.svc.cluster.local:5432/postgres
-  h2:
-    console:
-      enabled: true
+#  h2:
+#    console:
+#      enabled: true
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
