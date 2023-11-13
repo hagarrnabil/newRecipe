@@ -34,7 +34,7 @@ public class Project implements Serializable {
     @JoinColumn(name = "company_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("company_code")
-    private CompanyCode companyCode;
+    private CompanyMD companyMD;
     @OneToMany(mappedBy = "project")
     private final Set<Unit> units;
 
@@ -86,13 +86,14 @@ public class Project implements Serializable {
 //        this.companyCodeID = companyCodeID;
 //    }
     @JsonBackReference
-    public CompanyCode getCompanyCode() {
-        return companyCode;
+    public CompanyMD getCompanyMD() {
+        return companyMD;
     }
     @JsonBackReference
-    public void setCompanyCode(CompanyCode companyCode) {
-        this.companyCode = companyCode;
+    public void setCompanyMD(CompanyMD companyMD) {
+        this.companyMD = companyMD;
     }
+
     @JsonManagedReference
     public Set<Unit> getUnits() {
         return units;

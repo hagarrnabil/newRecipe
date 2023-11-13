@@ -29,10 +29,10 @@ public class Unit implements Serializable {
     @NotNull
     private String description;
     private String unitType;
-    private String usageTypeDescription;
-    private String unitStatus;
-    private String view;
-    private Integer floor;
+//    private String usageTypeDescription;
+//    private String unitStatus;
+//    private String view;
+//    private Integer floor;
     private Integer toFloor;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date blockingDate;
@@ -65,7 +65,7 @@ public class Unit implements Serializable {
     @JoinColumn(name = "company_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("company_code")
-    private CompanyCode companyCode;
+    private CompanyMD companyMD;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -78,10 +78,10 @@ public class Unit implements Serializable {
         this.oldNumber = oldNumber;
         this.description = description;
         this.unitType = unitType;
-        this.usageTypeDescription = usageTypeDescription;
-        this.unitStatus = unitStatus;
-        this.view = view;
-        this.floor = floor;
+//        this.usageTypeDescription = usageTypeDescription;
+//        this.unitStatus = unitStatus;
+//        this.view = view;
+//        this.floor = floor;
         this.toFloor = toFloor;
         this.blockingDate = blockingDate;
         this.blockingReason = blockingReason;
@@ -150,37 +150,37 @@ public class Unit implements Serializable {
         this.unitType = unitType;
     }
 
-    public String getUsageTypeDescription() {
-        return usageTypeDescription;
-    }
-
-    public void setUsageTypeDescription(String usageTypeDescription) {
-        this.usageTypeDescription = usageTypeDescription;
-    }
-
-    public String getUnitStatus() {
-        return unitStatus;
-    }
-
-    public void setUnitStatus(String unitStatus) {
-        this.unitStatus = unitStatus;
-    }
-
-    public String getView() {
-        return view;
-    }
-
-    public void setView(String view) {
-        this.view = view;
-    }
-
-    public Integer getFloor() {
-        return floor;
-    }
-
-    public void setFloor(Integer floor) {
-        this.floor = floor;
-    }
+//    public String getUsageTypeDescription() {
+//        return usageTypeDescription;
+//    }
+//
+//    public void setUsageTypeDescription(String usageTypeDescription) {
+//        this.usageTypeDescription = usageTypeDescription;
+//    }
+//
+//    public String getUnitStatus() {
+//        return unitStatus;
+//    }
+//
+//    public void setUnitStatus(String unitStatus) {
+//        this.unitStatus = unitStatus;
+//    }
+//
+//    public String getView() {
+//        return view;
+//    }
+//
+//    public void setView(String view) {
+//        this.view = view;
+//    }
+//
+//    public Integer getFloor() {
+//        return floor;
+//    }
+//
+//    public void setFloor(Integer floor) {
+//        this.floor = floor;
+//    }
 
     public Integer getToFloor() {
         return toFloor;
@@ -366,13 +366,14 @@ public class Unit implements Serializable {
         Amount = amount;
     }
     @JsonBackReference
-    public CompanyCode getCompanyCode() {
-        return companyCode;
+    public CompanyMD getCompanyMD() {
+        return companyMD;
     }
     @JsonBackReference
-    public void setCompanyCode(CompanyCode companyCode) {
-        this.companyCode = companyCode;
+    public void setCompanyMD(CompanyMD companyMD) {
+        this.companyMD = companyMD;
     }
+
     @JsonBackReference
     public Project getProject() {
         return project;
@@ -390,10 +391,10 @@ public class Unit implements Serializable {
                 ", oldNumber=" + oldNumber +
                 ", description='" + description + '\'' +
                 ", unitType='" + unitType + '\'' +
-                ", usageTypeDescription='" + usageTypeDescription + '\'' +
-                ", unitStatus='" + unitStatus + '\'' +
-                ", view='" + view + '\'' +
-                ", floor=" + floor +
+//                ", usageTypeDescription='" + usageTypeDescription + '\'' +
+//                ", unitStatus='" + unitStatus + '\'' +
+//                ", view='" + view + '\'' +
+//                ", floor=" + floor +
                 ", toFloor=" + toFloor +
                 ", blockingDate=" + blockingDate +
                 ", blockingReason='" + blockingReason + '\'' +

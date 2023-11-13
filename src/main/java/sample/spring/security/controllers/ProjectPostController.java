@@ -53,7 +53,7 @@ public class ProjectPostController {
             project.setCompanyCodeDescription(newProject.getCompanyCodeDescription());
             project.setValidFrom(newProject.getValidFrom());
             project.setRegionalLocation(newProject.getRegionalLocation());
-            project.setCompanyCodeID(newProject.getCompanyCodeID());
+            project.setCompanyMD(newProject.getCompanyMD());
             return projectrepository.save(newProject);
         }).orElseGet(() -> {
             newProject.setProject_code(project_code);

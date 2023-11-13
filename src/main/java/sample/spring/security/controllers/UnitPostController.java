@@ -51,9 +51,9 @@ public class UnitPostController {
             unit.setAmount(newUnit.getAmount());
             unit.setUnitOfMeasurement(newUnit.getUnitOfMeasurement());
             unit.setDescription(newUnit.getDescription());
-            unit.setFloor(newUnit.getFloor());
+//            unit.setFloor(newUnit.getFloor());
             unit.setUnitType(newUnit.getUnitType());
-            unit.setUnitStatus(newUnit.getUnitStatus());
+//            unit.setUnitStatus(newUnit.getUnitStatus());
             unit.setBlockingDate(newUnit.getBlockingDate());
             unit.setBlockingReason(newUnit.getBlockingReason());
             unit.setBuiltUpArea(newUnit.getBuiltUpArea());
@@ -76,8 +76,8 @@ public class UnitPostController {
             unit.setSalesPhase(newUnit.getSalesPhase());
             unit.setToFloor(newUnit.getToFloor());
             unit.setUnitAdditionalPayment(newUnit.getUnitAdditionalPayment());
-            unit.setUsageTypeDescription(newUnit.getUsageTypeDescription());
-            unit.setView(newUnit.getView());
+//            unit.setUsageTypeDescription(newUnit.getUsageTypeDescription());
+//            unit.setView(newUnit.getView());
             unit.setUnit_code(newUnit.getUnit_code());
             unit.setUnitKey(newUnit.getUnitKey());
             unit.setMeasurements(newUnit.getMeasurements());

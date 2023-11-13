@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "companyCode")
-public class CompanyCode implements Serializable {
+public class CompanyMD implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "company_code")
@@ -26,12 +26,12 @@ public class CompanyCode implements Serializable {
     @OneToMany(mappedBy = "companycode")
     private final Set<Unit> units;
 
-    public CompanyCode() {
+    public CompanyMD() {
         projects = null;
         units = null;
     }
 
-    public CompanyCode(Long company_code, String companyCodeID, String companyCodeDescription, Set<Project> projects, Set<Unit> units) {
+    public CompanyMD(Long company_code, String companyCodeID, String companyCodeDescription, Set<Project> projects, Set<Unit> units) {
         this.company_code = company_code;
         this.companyCodeID = companyCodeID;
         this.companyCodeDescription = companyCodeDescription;

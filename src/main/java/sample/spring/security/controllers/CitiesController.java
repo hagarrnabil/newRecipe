@@ -4,9 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sample.spring.security.models.Cities;
-import sample.spring.security.models.CompanyCode;
 import sample.spring.security.repositories.CitiesRepository;
-import sample.spring.security.repositories.CompanyCodeRepository;
 
 import java.util.List;
 import java.util.Optional;
