@@ -51,9 +51,7 @@ public class UnitPostController {
             unit.setAmount(newUnit.getAmount());
             unit.setUnitOfMeasurement(newUnit.getUnitOfMeasurement());
             unit.setDescription(newUnit.getDescription());
-//            unit.setFloor(newUnit.getFloor());
             unit.setUnitType(newUnit.getUnitType());
-//            unit.setUnitStatus(newUnit.getUnitStatus());
             unit.setBlockingDate(newUnit.getBlockingDate());
             unit.setBlockingReason(newUnit.getBlockingReason());
             unit.setBuiltUpArea(newUnit.getBuiltUpArea());
@@ -76,24 +74,17 @@ public class UnitPostController {
             unit.setSalesPhase(newUnit.getSalesPhase());
             unit.setToFloor(newUnit.getToFloor());
             unit.setUnitAdditionalPayment(newUnit.getUnitAdditionalPayment());
-//            unit.setUsageTypeDescription(newUnit.getUsageTypeDescription());
-//            unit.setView(newUnit.getView());
             unit.setUnit_code(newUnit.getUnit_code());
             unit.setUnitKey(newUnit.getUnitKey());
             unit.setMeasurements(newUnit.getMeasurements());
+            unit.setProject(newUnit.getProject());
             return unitrepository.save(newUnit);
         }).orElseGet(() -> {
             newUnit.setUnit_code(unit_code);
             return unitrepository.save(newUnit);
         });
     }
-    
-    @RequestMapping(method = RequestMethod.GET, value = "/units/unitTypeandview")
-    @ResponseBody
-    public List<Unit> Search(@RequestParam String unitType, @RequestParam String view) {
 
-        return unitrepository.findByUnitTypeAndView(unitType, view);
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/units/search")
     @ResponseBody

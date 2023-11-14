@@ -29,10 +29,6 @@ public class Unit implements Serializable {
     @NotNull
     private String description;
     private String unitType;
-//    private String usageTypeDescription;
-//    private String unitStatus;
-//    private String view;
-//    private Integer floor;
     private Integer toFloor;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date blockingDate;
@@ -62,26 +58,17 @@ public class Unit implements Serializable {
     private String conditionDescription;
     private Integer Amount;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "company_code", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty("company_code")
-    private CompanyMD companyMD;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty("project_code")
+    @JsonProperty("projectCode")
     private Project project;
 
-    public Unit(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, String usageTypeDescription, String unitStatus, String view, Integer floor, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount) {
+    public Unit(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount, Project project) {
         this.unit_code = unit_code;
         this.unitKey = unitKey;
         this.oldNumber = oldNumber;
         this.description = description;
         this.unitType = unitType;
-//        this.usageTypeDescription = usageTypeDescription;
-//        this.unitStatus = unitStatus;
-//        this.view = view;
-//        this.floor = floor;
         this.toFloor = toFloor;
         this.blockingDate = blockingDate;
         this.blockingReason = blockingReason;
@@ -105,6 +92,7 @@ public class Unit implements Serializable {
         this.conditionCode = conditionCode;
         this.conditionDescription = conditionDescription;
         Amount = amount;
+        this.project = project;
     }
 
     public Unit() {
@@ -150,37 +138,6 @@ public class Unit implements Serializable {
         this.unitType = unitType;
     }
 
-//    public String getUsageTypeDescription() {
-//        return usageTypeDescription;
-//    }
-//
-//    public void setUsageTypeDescription(String usageTypeDescription) {
-//        this.usageTypeDescription = usageTypeDescription;
-//    }
-//
-//    public String getUnitStatus() {
-//        return unitStatus;
-//    }
-//
-//    public void setUnitStatus(String unitStatus) {
-//        this.unitStatus = unitStatus;
-//    }
-//
-//    public String getView() {
-//        return view;
-//    }
-//
-//    public void setView(String view) {
-//        this.view = view;
-//    }
-//
-//    public Integer getFloor() {
-//        return floor;
-//    }
-//
-//    public void setFloor(Integer floor) {
-//        this.floor = floor;
-//    }
 
     public Integer getToFloor() {
         return toFloor;
@@ -365,14 +322,6 @@ public class Unit implements Serializable {
     public void setAmount(Integer amount) {
         Amount = amount;
     }
-    @JsonBackReference
-    public CompanyMD getCompanyMD() {
-        return companyMD;
-    }
-    @JsonBackReference
-    public void setCompanyMD(CompanyMD companyMD) {
-        this.companyMD = companyMD;
-    }
 
     @JsonBackReference
     public Project getProject() {
@@ -391,10 +340,6 @@ public class Unit implements Serializable {
                 ", oldNumber=" + oldNumber +
                 ", description='" + description + '\'' +
                 ", unitType='" + unitType + '\'' +
-//                ", usageTypeDescription='" + usageTypeDescription + '\'' +
-//                ", unitStatus='" + unitStatus + '\'' +
-//                ", view='" + view + '\'' +
-//                ", floor=" + floor +
                 ", toFloor=" + toFloor +
                 ", blockingDate=" + blockingDate +
                 ", blockingReason='" + blockingReason + '\'' +
@@ -418,6 +363,7 @@ public class Unit implements Serializable {
                 ", conditionCode='" + conditionCode + '\'' +
                 ", conditionDescription='" + conditionDescription + '\'' +
                 ", Amount=" + Amount +
+                ", project=" + project +
                 '}';
     }
 }

@@ -43,6 +43,7 @@ public class ProjectPostController {
         projectrepository.deleteById(project_code);
     }
 
+
     @PutMapping("/projects/{project_code}")
     Project updateProject(@RequestBody Project newProject, @PathVariable Long project_code) {
 
@@ -52,20 +53,12 @@ public class ProjectPostController {
             project.setProjectDescription(newProject.getProjectDescription());
             project.setCompanyCodeDescription(newProject.getCompanyCodeDescription());
             project.setValidFrom(newProject.getValidFrom());
-            project.setRegionalLocation(newProject.getRegionalLocation());
             project.setCompanyMD(newProject.getCompanyMD());
             return projectrepository.save(newProject);
         }).orElseGet(() -> {
             newProject.setProject_code(project_code);
             return projectrepository.save(newProject);
         });
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/projects/projectDescriptionsandregionalLocation")
-    @ResponseBody
-    public List<Project> Search(@RequestParam String projectDescription, @RequestParam String regionalLocation) {
-
-        return projectrepository.findByProjectDescriptionAndRegionalLocation(projectDescription, regionalLocation);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/projects/search")

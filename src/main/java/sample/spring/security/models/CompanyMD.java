@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "companyCode")
+@Table(name = "companyMD")
 public class CompanyMD implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,22 +21,18 @@ public class CompanyMD implements Serializable {
     private String companyCodeID;
     @NotNull
     private String companyCodeDescription;
-    @OneToMany(mappedBy = "companycode")
+    @OneToMany(mappedBy = "companyMD")
     private final Set<Project> projects;
-    @OneToMany(mappedBy = "companycode")
-    private final Set<Unit> units;
 
     public CompanyMD() {
         projects = null;
-        units = null;
     }
 
-    public CompanyMD(Long company_code, String companyCodeID, String companyCodeDescription, Set<Project> projects, Set<Unit> units) {
+    public CompanyMD(Long company_code, String companyCodeID, String companyCodeDescription, Set<Project> projects) {
         this.company_code = company_code;
         this.companyCodeID = companyCodeID;
         this.companyCodeDescription = companyCodeDescription;
         this.projects = projects;
-        this.units = units;
     }
 
     public Long getCompany_code() {
@@ -66,17 +62,14 @@ public class CompanyMD implements Serializable {
     public Set<Project> getProjects() {
         return projects;
     }
-    @JsonManagedReference
-    public Set<Unit> getUnits() {
-        return units;
-    }
 
     @Override
     public String toString() {
-        return "CompanyCode{" +
+        return "CompanyMD{" +
                 "company_code=" + company_code +
                 ", companyCodeID='" + companyCodeID + '\'' +
                 ", companyCodeDescription='" + companyCodeDescription + '\'' +
+                ", projects=" + projects +
                 '}';
     }
 }

@@ -25,27 +25,24 @@ public class Project implements Serializable {
     private String projectID;
     @NotNull
     private String projectDescription;
-    //private Integer companyCodeID;
     private String companyCodeDescription;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
-    private String regionalLocation;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty("company_code")
+    @JsonProperty("companyCode")
     private CompanyMD companyMD;
     @OneToMany(mappedBy = "project")
     private final Set<Unit> units;
 
-    public Project(Long project_code, String projectID, String projectDescription, Integer companyCodeID, String companyCodeDescription, Date validFrom, String regionalLocation, Set<Unit> units) {
+    public Project(Long project_code, String projectID, String projectDescription, String companyCodeDescription, Date validFrom, CompanyMD companyMD, Set<Unit> units) {
         this.project_code = project_code;
         this.projectID = projectID;
         this.projectDescription = projectDescription;
-        //this.companyCodeID = companyCodeID;
         this.companyCodeDescription = companyCodeDescription;
         this.validFrom = validFrom;
-        this.regionalLocation = regionalLocation;
+        this.companyMD = companyMD;
         this.units = units;
     }
 
@@ -78,13 +75,6 @@ public class Project implements Serializable {
         this.projectDescription = projectDescription;
     }
 
-//    public Integer getCompanyCodeID() {
-//        return companyCodeID;
-//    }
-//
-//    public void setCompanyCodeID(Integer companyCodeID) {
-//        this.companyCodeID = companyCodeID;
-//    }
     @JsonBackReference
     public CompanyMD getCompanyMD() {
         return companyMD;
@@ -115,13 +105,6 @@ public class Project implements Serializable {
         this.validFrom = validFrom;
     }
 
-    public String getRegionalLocation() {
-        return regionalLocation;
-    }
-
-    public void setRegionalLocation(String regionalLocation) {
-        this.regionalLocation = regionalLocation;
-    }
 
     @Override
     public String toString() {
@@ -129,10 +112,10 @@ public class Project implements Serializable {
                 "project_code=" + project_code +
                 ", projectID='" + projectID + '\'' +
                 ", projectDescription='" + projectDescription + '\'' +
-//                ", companyCodeID=" + companyCodeID +
                 ", companyCodeDescription='" + companyCodeDescription + '\'' +
                 ", validFrom=" + validFrom +
-                ", regionalLocation='" + regionalLocation + '\'' +
+                ", companyMD=" + companyMD +
+                ", units=" + units +
                 '}';
     }
 }

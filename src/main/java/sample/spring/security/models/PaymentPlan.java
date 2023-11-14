@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
@@ -252,5 +251,31 @@ public class PaymentPlan implements Serializable {
         this.noOfInstallments = noOfInstallments;
     }
 
-
+    @Override
+    public String toString() {
+        return "PaymentPlan{" +
+                "payment_code=" + payment_code +
+                ", paymentPlanCode='" + paymentPlanCode + '\'' +
+                ", paymentPlanDescription='" + paymentPlanDescription + '\'' +
+                ", conditionGroup='" + conditionGroup + '\'' +
+                ", assignedPricePlan='" + assignedPricePlan + '\'' +
+                ", noOfYears=" + noOfYears +
+                ", validFrom=" + validFrom +
+                ", validTo=" + validTo +
+                ", maintenanceNumberOfMonth=" + maintenanceNumberOfMonth +
+                ", installmentCalculationMethod='" + installmentCalculationMethod + '\'' +
+                ", Phase='" + Phase + '\'' +
+                ", planStatus='" + planStatus + '\'' +
+                ", approvalStatus='" + approvalStatus + '\'' +
+                ", assignedProjectsTab='" + assignedProjectsTab + '\'' +
+                ", paymentPlanDetails='" + paymentPlanDetails + '\'' +
+                ", conditionType='" + conditionType + '\'' +
+                ", conditionPercentage='" + conditionPercentage + '\'' +
+                ", conditionBasePrice=" + conditionBasePrice +
+                ", calculationMethod='" + calculationMethod + '\'' +
+                ", frequency='" + frequency + '\'' +
+                ", dueOnInMonth='" + dueOnInMonth + '\'' +
+                ", noOfInstallments=" + noOfInstallments +
+                '}';
+    }
 }

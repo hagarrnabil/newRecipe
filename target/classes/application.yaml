@@ -1,12 +1,8 @@
-server:
-  port: ${PORT:8080}
-
 logging.level:
   com.sap: DEBUG
   org.springframework: ERROR
   org.springframework.security: DEBUG
   org.springframework.web: DEBUG
-
 #sap.security.services:
 #  identity:
 #    clientid:  sb-clientId!t0815  # SecurityTest.DEFAULT_CLIENT_ID
@@ -17,26 +13,21 @@ logging.level:
 #    uaadomain: localhost          # SecurityTest.DEFAULT_DOMAIN
 #    clientid:  sb-clientId!t0815  # SecurityTest.DEFAULT_CLIENT_ID
 #    url:       http://localhost   # SecurityTest.DEFAULT_URL
-
 spring:
   datasource:
     password: password
-#    url: jdbc:postgresql://172.17.0.4:5432/postgres
+    #    url: jdbc:postgresql://172.17.0.4:5432/postgres
     username: postgres
-    url: jdbc:postgresql://postgres.demooo.svc.cluster.local:5432/postgres
-#  h2:
-#    console:
-#      enabled: true
+    url: jdbc:postgresql://postgres.trial.svc.cluster.local:5432/postgres
+  h2:
+    console:
+      enabled: true
+  #  h2:
+  #    console:
+  #      enabled: true
   jpa:
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT
-
-
-
