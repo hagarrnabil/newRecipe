@@ -5,6 +5,7 @@ sample/spring/security/controllers/UnitFloorController.class
 sample/spring/security/TestController.class
 sample/spring/security/controllers/IndexController.class
 sample/spring/security/repositories/CitiesRepository.class
+sample/spring/security/repositories/BuildingRepository.class
 sample/spring/security/repositories/CompanyRepository.class
 sample/spring/security/repositories/UnitViewRepository.class
 sample/spring/security/repositories/PaymentPlan.class
@@ -12,11 +13,13 @@ sample/spring/security/controllers/CompanyController.class
 sample/spring/security/repositories/UnitUsageRepository.class
 sample/spring/security/models/UnitUsage.class
 sample/spring/security/models/Project.class
+sample/spring/security/controllers/BuildingController.class
 sample/spring/security/repositories/ProjectRepository.class
 sample/spring/security/SecurityConfiguration$MyCustomIasTokenAuthenticationConverter.class
 sample/spring/security/models/IasUser.class
 sample/spring/security/controllers/UnitStatusController.class
 sample/spring/security/models/Unit.class
+sample/spring/security/models/BuildingType.class
 sample/spring/security/models/UnitView.class
 sample/spring/security/controllers/PaymentPlanController.class
 sample/spring/security/controllers/GetController.class
@@ -24,6 +27,8 @@ sample/spring/security/controllers/UnitViewController.class
 sample/spring/security/models/Cities.class
 sample/spring/security/repositories/UnitFloorRepository.class
 sample/spring/security/models/PaymentPlan.class
+sample/spring/security/models/Building.class
+sample/spring/security/controllers/BuildingTypeController.class
 sample/spring/security/models/UnitFloor.class
 sample/spring/security/SecurityConfiguration.class
 sample/spring/security/repositories/UnitStatusRepository.class
@@ -31,6 +36,7 @@ sample/spring/security/SecurityConfiguration$MyCustomHybridTokenAuthenticationCo
 sample/spring/security/models/CompanyMD.class
 sample/spring/security/controllers/ProjectPostController.class
 sample/spring/security/controllers/UnitPostController.class
+sample/spring/security/repositories/BuildingTypeRepository.class
 sample/spring/security/DataService.class
 sample/spring/security/controllers/UnitUsageController.class
 sample/spring/security/controllers/CitiesController.class

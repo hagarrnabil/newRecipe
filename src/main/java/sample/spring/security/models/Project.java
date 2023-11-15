@@ -25,30 +25,32 @@ public class Project implements Serializable {
     private String projectID;
     @NotNull
     private String projectDescription;
-    private String companyCodeDescription;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty("companyCode")
+    @JsonProperty("company_code")
     private CompanyMD companyMD;
+//    @OneToMany(mappedBy = "project")
+//    private final Set<Unit> units;
     @OneToMany(mappedBy = "project")
-    private final Set<Unit> units;
+    private final Set<Building> buildings;
 
-    public Project(Long project_code, String projectID, String projectDescription, String companyCodeDescription, Date validFrom, CompanyMD companyMD, Set<Unit> units) {
+    public Project(Long project_code, String projectID, String projectDescription, Date validFrom, CompanyMD companyMD, Set<Unit> units, Set<Building> buildings) {
         this.project_code = project_code;
         this.projectID = projectID;
         this.projectDescription = projectDescription;
-        this.companyCodeDescription = companyCodeDescription;
         this.validFrom = validFrom;
         this.companyMD = companyMD;
-        this.units = units;
+//        this.units = units;
+        this.buildings = buildings;
     }
 
     public Project() {
 
-        units = null;
+//        units = null;
+        buildings = null;
     }
 
     public Long getProject_code() {
@@ -84,18 +86,21 @@ public class Project implements Serializable {
         this.companyMD = companyMD;
     }
 
+//    @JsonManagedReference
+//    public Set<Unit> getUnits() {
+//        return units;
+//    }
     @JsonManagedReference
-    public Set<Unit> getUnits() {
-        return units;
+    public Set<Building> getBuildings() {
+        return buildings;
     }
-
-    public String getCompanyCodeDescription() {
-        return companyCodeDescription;
-    }
-
-    public void setCompanyCodeDescription(String companyCodeDescription) {
-        this.companyCodeDescription = companyCodeDescription;
-    }
+//    public String getCompanyCodeDescription() {
+//        return companyCodeDescription;
+//    }
+//
+//    public void setCompanyCodeDescription(String companyCodeDescription) {
+//        this.companyCodeDescription = companyCodeDescription;
+//    }
 
     public Date getValidFrom() {
         return validFrom;
@@ -112,10 +117,9 @@ public class Project implements Serializable {
                 "project_code=" + project_code +
                 ", projectID='" + projectID + '\'' +
                 ", projectDescription='" + projectDescription + '\'' +
-                ", companyCodeDescription='" + companyCodeDescription + '\'' +
                 ", validFrom=" + validFrom +
                 ", companyMD=" + companyMD +
-                ", units=" + units +
+                ", buildings=" + buildings +
                 '}';
     }
 }

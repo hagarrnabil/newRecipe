@@ -58,12 +58,12 @@ public class Unit implements Serializable {
     private String conditionDescription;
     private Integer Amount;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "project_code", nullable = false)
+    @JoinColumn(name = "building_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty("projectCode")
-    private Project project;
+    @JsonProperty("building_code")
+    private Building building;
 
-    public Unit(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount, Project project) {
+    public Unit(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount, Building building) {
         this.unit_code = unit_code;
         this.unitKey = unitKey;
         this.oldNumber = oldNumber;
@@ -92,7 +92,7 @@ public class Unit implements Serializable {
         this.conditionCode = conditionCode;
         this.conditionDescription = conditionDescription;
         Amount = amount;
-        this.project = project;
+        this.building = building;
     }
 
     public Unit() {
@@ -322,14 +322,13 @@ public class Unit implements Serializable {
     public void setAmount(Integer amount) {
         Amount = amount;
     }
-
     @JsonBackReference
-    public Project getProject() {
-        return project;
+    public Building getBuilding() {
+        return building;
     }
     @JsonBackReference
-    public void setProject(Project project) {
-        this.project = project;
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     @Override
@@ -363,7 +362,7 @@ public class Unit implements Serializable {
                 ", conditionCode='" + conditionCode + '\'' +
                 ", conditionDescription='" + conditionDescription + '\'' +
                 ", Amount=" + Amount +
-                ", project=" + project +
+                ", building=" + building +
                 '}';
     }
 }
