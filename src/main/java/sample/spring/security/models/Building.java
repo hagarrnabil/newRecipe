@@ -39,8 +39,8 @@ public class Building implements Serializable {
     @JsonProperty("project_code")
     private Project project;
 
-    public Building() {
-        units = null;
+    public Building(Set<Unit> units) {
+        this.units = units;
     }
 
     public Building(Long building_code, String buildingID, String buildingDescription, String oldNumber, Date validFrom, Integer numberOfFloors, Set<Unit> units, Project project) {
@@ -52,6 +52,11 @@ public class Building implements Serializable {
         this.numberOfFloors = numberOfFloors;
         this.units = units;
         this.project = project;
+    }
+
+    public Building() {
+
+        units = null;
     }
 
     public Long getBuilding_code() {
@@ -124,6 +129,7 @@ public class Building implements Serializable {
                 ", validFrom=" + validFrom +
                 ", numberOfFloors=" + numberOfFloors +
                 ", units=" + units +
+                ", project=" + project +
                 '}';
     }
 }

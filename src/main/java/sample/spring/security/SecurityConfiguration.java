@@ -48,29 +48,33 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // @formatter:off
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests(authz ->
-                        authz.requestMatchers("/sayHello").hasAuthority("Read")
-                                .requestMatchers("/units/*").hasAuthority("Read")
-                                .requestMatchers("/projects/*").hasAuthority("Read")
-                                .requestMatchers("/paymentplans/*").hasAuthority("Read")
-                                .requestMatchers("/cities/*").hasAuthority("Read")
-                                .requestMatchers("/companymd/*").hasAuthority("Read")
-                                .requestMatchers("/unitusage/*").hasAuthority("Read")
-                                .requestMatchers("/unitstatus/*").hasAuthority("Read")
-                                .requestMatchers("/unitview/*").hasAuthority("Read")
-                                .requestMatchers("/unitfloor/*").hasAuthority("Read")
-                                .requestMatchers("/buildingtype/*").hasAuthority("Read")
-                                .requestMatchers("/*").authenticated()
-                                .anyRequest().denyAll())
-                .oauth2ResourceServer()
-                .jwt()
-                .jwtAuthenticationConverter(new MyCustomHybridTokenAuthenticationConverter()); // Adjust the converter to represent your use case
+//        http.sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeHttpRequests(authz ->
+//                        authz.requestMatchers("/sayHello").hasAuthority("Read")
+//                                .requestMatchers("/units/*").hasAuthority("Read")
+//                                .requestMatchers("/projects/*").hasAuthority("Read")
+//                                .requestMatchers("/paymentplans/*").hasAuthority("Read")
+//                                .requestMatchers("/cities/*").hasAuthority("Read")
+//                                .requestMatchers("/companymd/*").hasAuthority("Read")
+//                                .requestMatchers("/unitusage/*").hasAuthority("Read")
+//                                .requestMatchers("/unitstatus/*").hasAuthority("Read")
+//                                .requestMatchers("/unitview/*").hasAuthority("Read")
+//                                .requestMatchers("/unitfloor/*").hasAuthority("Read")
+//                                .requestMatchers("/buildingtype/*").hasAuthority("Read")
+//                                .requestMatchers("/*").authenticated()
+//                                .anyRequest().denyAll())
+//                .oauth2ResourceServer()
+//                .jwt()
+//                .jwtAuthenticationConverter(new MyCustomHybridTokenAuthenticationConverter()); // Adjust the converter to represent your use case
         // Use MyCustomHybridTokenAuthenticationConverter when IAS and XSUAA is used
         // Use MyCustomIasTokenAuthenticationConverter when only IAS is used
         // @formatter:on
+//        return http.build();
+        http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest()
+                        .permitAll());
+        http.csrf(csrf -> csrf.disable());
         return http.build();
     }
 

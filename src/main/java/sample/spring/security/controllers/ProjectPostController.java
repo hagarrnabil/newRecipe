@@ -36,7 +36,7 @@ public class ProjectPostController {
         return projectrepository.findById(project_code);
     }
 
-    @PostMapping("/companymd/{company_code}/projects")
+    @PostMapping("/companymd/{company_code}/project")
     Project newProject(@PathVariable(value = "company_code") Long company_code, @RequestBody Project newProject) {
         return companyRepository.findById(company_code).map(companyMD -> {
             newProject.setCompanyMD(companyMD);

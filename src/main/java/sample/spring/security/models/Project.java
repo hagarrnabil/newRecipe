@@ -32,24 +32,25 @@ public class Project implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("company_code")
     private CompanyMD companyMD;
-//    @OneToMany(mappedBy = "project")
-//    private final Set<Unit> units;
     @OneToMany(mappedBy = "project")
     private final Set<Building> buildings;
 
-    public Project(Long project_code, String projectID, String projectDescription, Date validFrom, CompanyMD companyMD, Set<Unit> units, Set<Building> buildings) {
+    public Project(Long project_code, String projectID, String projectDescription, Date validFrom, CompanyMD companyMD, Set<Building> buildings) {
         this.project_code = project_code;
         this.projectID = projectID;
         this.projectDescription = projectDescription;
         this.validFrom = validFrom;
         this.companyMD = companyMD;
-//        this.units = units;
+        this.buildings = buildings;
+    }
+
+    public Project(Set<Building> buildings) {
+
         this.buildings = buildings;
     }
 
     public Project() {
 
-//        units = null;
         buildings = null;
     }
 
@@ -86,21 +87,12 @@ public class Project implements Serializable {
         this.companyMD = companyMD;
     }
 
-//    @JsonManagedReference
-//    public Set<Unit> getUnits() {
-//        return units;
-//    }
+
     @JsonManagedReference
     public Set<Building> getBuildings() {
         return buildings;
     }
-//    public String getCompanyCodeDescription() {
-//        return companyCodeDescription;
-//    }
-//
-//    public void setCompanyCodeDescription(String companyCodeDescription) {
-//        this.companyCodeDescription = companyCodeDescription;
-//    }
+
 
     public Date getValidFrom() {
         return validFrom;

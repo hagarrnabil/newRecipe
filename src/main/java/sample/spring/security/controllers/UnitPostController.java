@@ -46,7 +46,7 @@ public class UnitPostController {
         return unitrepository.findById(unit_code);
     }
 
-    @PostMapping("/companymd/{company_code}/projects/{project_code}/buildings/{building_code}/units")
+    @PostMapping("/companymd/{company_code}/projects/{project_code}/buildings/{building_code}/unit")
     Unit newUnit(@PathVariable(value = "company_code") Long company_code,
                  @PathVariable(value = "project_code") Long project_code,
                  @PathVariable(value = "building_code") Long building_code, @RequestBody Unit newUnit) {
@@ -117,7 +117,8 @@ public class UnitPostController {
                         unit.setMeasurementValue(newUnit.getMeasurementValue());
                         unit.setMeasurementsID(newUnit.getMeasurementsID());
                         unit.setMeasurementsDescription(newUnit.getMeasurementsDescription());
-                        unit.setBuilding(newUnit.getBuilding());
+                        unit.setFixture(newUnit.getFixture());
+                        unit.setDescription(newUnit.getDescription());
                         return unitrepository.save(newUnit);
                     }).orElseThrow(() -> new RuntimeException("PostId " + unit_code + " not found"));
                 }).orElseThrow(() -> new RuntimeException("PostId " + building_code + " not found"));

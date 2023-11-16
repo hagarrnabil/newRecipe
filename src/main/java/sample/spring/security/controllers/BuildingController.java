@@ -38,7 +38,7 @@ public class BuildingController {
         return buildingRepository.findById(building_code);
     }
 
-    @PostMapping("/companymd/{company_code}/projects/{project_code}/buildings")
+    @PostMapping("/companymd/{company_code}/projects/{project_code}/building")
     Building newBuilding(@PathVariable(value = "company_code") Long company_code,
                          @PathVariable(value = "project_code") Long project_code, @RequestBody Building newBuilding) {
 
