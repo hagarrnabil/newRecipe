@@ -58,10 +58,7 @@ public class CompanyMD implements Serializable {
     public void setCompanyCodeDescription(String companyCodeDescription) {
         this.companyCodeDescription = companyCodeDescription;
     }
-    @JsonManagedReference
-    public Set<Project> getProjects() {
-        return projects;
-    }
+
 
     @Override
     public String toString() {
@@ -69,7 +66,6 @@ public class CompanyMD implements Serializable {
                 "company_code=" + company_code +
                 ", companyCodeID='" + companyCodeID + '\'' +
                 ", companyCodeDescription='" + companyCodeDescription + '\'' +
-                ", projects=" + projects +
                 '}';
     }
 }

@@ -14,7 +14,6 @@ import java.util.Date;
 
 @Entity
 @Table(name="units")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -362,7 +361,6 @@ public class Unit implements Serializable {
                 ", conditionCode='" + conditionCode + '\'' +
                 ", conditionDescription='" + conditionDescription + '\'' +
                 ", Amount=" + Amount +
-                ", building=" + building +
                 '}';
     }
 }

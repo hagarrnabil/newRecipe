@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "buildings")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Building implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,9 +38,7 @@ public class Building implements Serializable {
     @JsonProperty("project_code")
     private Project project;
 
-    public Building(Set<Unit> units) {
-        this.units = units;
-    }
+
 
     public Building(Long building_code, String buildingID, String buildingDescription, String oldNumber, Date validFrom, Integer numberOfFloors, Set<Unit> units, Project project) {
         this.building_code = building_code;
@@ -52,6 +49,10 @@ public class Building implements Serializable {
         this.numberOfFloors = numberOfFloors;
         this.units = units;
         this.project = project;
+    }
+
+    public Building(Set<Unit> units) {
+        this.units = units;
     }
 
     public Building() {
@@ -106,10 +107,6 @@ public class Building implements Serializable {
     public void setNumberOfFloors(Integer numberOfFloors) {
         this.numberOfFloors = numberOfFloors;
     }
-    @JsonManagedReference
-    public Set<Unit> getUnits() {
-        return units;
-    }
     @JsonBackReference
     public Project getProject() {
         return project;
@@ -128,8 +125,6 @@ public class Building implements Serializable {
                 ", oldNumber='" + oldNumber + '\'' +
                 ", validFrom=" + validFrom +
                 ", numberOfFloors=" + numberOfFloors +
-                ", units=" + units +
-                ", project=" + project +
                 '}';
     }
 }

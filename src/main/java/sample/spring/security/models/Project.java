@@ -12,7 +12,6 @@ import java.util.*;
 
 @Entity
 @Table(name = "projects")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Project implements Serializable {
 
     @Id
@@ -45,7 +44,6 @@ public class Project implements Serializable {
     }
 
     public Project(Set<Building> buildings) {
-
         this.buildings = buildings;
     }
 
@@ -88,12 +86,6 @@ public class Project implements Serializable {
     }
 
 
-    @JsonManagedReference
-    public Set<Building> getBuildings() {
-        return buildings;
-    }
-
-
     public Date getValidFrom() {
         return validFrom;
     }
@@ -111,7 +103,6 @@ public class Project implements Serializable {
                 ", projectDescription='" + projectDescription + '\'' +
                 ", validFrom=" + validFrom +
                 ", companyMD=" + companyMD +
-                ", buildings=" + buildings +
                 '}';
     }
 }
