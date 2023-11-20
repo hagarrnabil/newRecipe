@@ -36,12 +36,9 @@ public class ProjectPostController {
         return projectrepository.findById(project_code);
     }
 
-    @PostMapping("/companymd/{company_code}/project")
-    Project newProject(@PathVariable(value = "company_code") Long company_code, @RequestBody Project newProject) {
-        return companyRepository.findById(company_code).map(companyMD -> {
-            newProject.setCompanyMD(companyMD);
+    @PostMapping("/projects")
+    Project newProject(@RequestBody Project newProject) {
             return projectrepository.save(newProject);
-        }).orElseThrow(() -> new RuntimeException("PostId " + company_code + " not found"));
     }
 
     @DeleteMapping("/projects/{project_code}")
@@ -50,20 +47,19 @@ public class ProjectPostController {
     }
 
 
-    @PutMapping("/companymd/{company_code}/projects/{project_code}")
-    Project updateProject(@RequestBody Project newProject, @PathVariable Long project_code, @PathVariable Long company_code) {
+    @PutMapping("/projects/{project_code}")
+    Project updateProject(@RequestBody Project newProject, @PathVariable Long project_code) {
 
-        return companyRepository.findById(company_code).map(companyMD -> {
-            newProject.setCompanyMD(companyMD);
-            projectrepository.save(newProject);
-            return projectrepository.findById(project_code).map(project -> {
-                project.setProjectID(newProject.getProjectID());
-                project.setProject_code(newProject.getProject_code());
-                project.setProjectDescription(newProject.getProjectDescription());
-                project.setValidFrom(newProject.getValidFrom());
-                return projectrepository.save(newProject);
-            }).orElseThrow(() -> new RuntimeException("PostId " + project_code + " not found"));
-        }).orElseThrow(() -> new RuntimeException("PostId " + company_code + " not found"));
+        return projectrepository.findById(project_code).map(project -> {
+            project.setProjectID(newProject.getProjectID());
+            project.setProject_code(newProject.getProject_code());
+            project.setProjectDescription(newProject.getProjectDescription());
+            project.setValidFrom(newProject.getValidFrom());
+            return projectrepository.save(newProject);
+        }).orElseGet(() -> {
+            newProject.setProject_code(project_code);
+            return projectrepository.save(newProject);
+        });
     }
 
 

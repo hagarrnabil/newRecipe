@@ -41,7 +41,7 @@ public class CompanyController {
     }
 
     @PutMapping("/companymd/{company_code}")
-   CompanyMD updateCompanyCode(@RequestBody CompanyMD newCompanyCode, @PathVariable Long company_code) {
+    CompanyMD updateCompanyCode(@RequestBody CompanyMD newCompanyCode, @PathVariable Long company_code) {
 
         return companyRepository.findById(company_code).map(companyCode -> {
             companyCode.setCompany_code(newCompanyCode.getCompany_code());

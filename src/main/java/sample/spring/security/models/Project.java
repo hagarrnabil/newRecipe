@@ -26,6 +26,7 @@ public class Project implements Serializable {
     private String projectDescription;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

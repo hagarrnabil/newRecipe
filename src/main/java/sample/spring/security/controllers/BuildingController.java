@@ -38,20 +38,10 @@ public class BuildingController {
         return buildingRepository.findById(building_code);
     }
 
-    @PostMapping("/companymd/{company_code}/projects/{project_code}/building")
-    Building newBuilding(@PathVariable(value = "company_code") Long company_code,
-                         @PathVariable(value = "project_code") Long project_code, @RequestBody Building newBuilding) {
+    @PostMapping("/buildings")
+    Building newBuilding(@RequestBody Building newBuilding) {
 
-        Project project = new Project();
-
-        return companyRepository.findById(company_code).map(companyMD -> {
-            project.setCompanyMD(companyMD);
-            projectRepository.save(project);
-            return projectRepository.findById(project_code).map(project1 -> {
-                newBuilding.setProject(project1);
-                return buildingRepository.save(newBuilding);
-            }).orElseThrow(() -> new RuntimeException("PostId " + project_code + " not found"));
-        }).orElseThrow(() -> new RuntimeException("PostId " + company_code + " not found"));
+        return buildingRepository.save(newBuilding);
     }
 
     @DeleteMapping("/buildings/{building_code}")
@@ -59,18 +49,9 @@ public class BuildingController {
         buildingRepository.deleteById(building_code);
     }
 
-    @PutMapping("/companymd/{company_code}/projects/{project_code}/buildings/{building_code}")
-    Building updateBuilding(@RequestBody Building newBuilding, @PathVariable(value = "company_code") Long company_code,
-                            @PathVariable(value = "project_code") Long project_code, @PathVariable Long building_code) {
+    @PutMapping("/buildings/{building_code}")
+    Building updateBuilding(@RequestBody Building newBuilding, @PathVariable Long building_code) {
 
-        Project project = new Project();
-
-        return companyRepository.findById(company_code).map(companyMD -> {
-            project.setCompanyMD(companyMD);
-            projectRepository.save(project);
-            return projectRepository.findById(project_code).map(project1 -> {
-                newBuilding.setProject(project1);
-                buildingRepository.save(newBuilding);
                 return buildingRepository.findById(building_code).map(building -> {
                     building.setBuilding_code(newBuilding.getBuilding_code());
                     building.setBuildingDescription(newBuilding.getBuildingDescription());
@@ -79,9 +60,10 @@ public class BuildingController {
                     building.setValidFrom(newBuilding.getValidFrom());
                     building.setOldNumber(newBuilding.getOldNumber());
                     return buildingRepository.save(newBuilding);
-                }).orElseThrow(() -> new RuntimeException("PostId " + building_code + " not found"));
-            }).orElseThrow(() -> new RuntimeException("PostId " + project_code + " not found"));
-        }).orElseThrow(() -> new RuntimeException("PostId " + company_code + " not found"));
+                }).orElseGet(() -> {
+                    newBuilding.setBuilding_code(building_code);
+                    return buildingRepository.save(newBuilding);
+                });
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/buildings/search")

@@ -56,6 +56,7 @@ public class Unit implements Serializable {
     private String conditionCode;
     private String conditionDescription;
     private Integer Amount;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "building_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

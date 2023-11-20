@@ -46,26 +46,10 @@ public class UnitPostController {
         return unitrepository.findById(unit_code);
     }
 
-    @PostMapping("/companymd/{company_code}/projects/{project_code}/buildings/{building_code}/unit")
-    Unit newUnit(@PathVariable(value = "company_code") Long company_code,
-                 @PathVariable(value = "project_code") Long project_code,
-                 @PathVariable(value = "building_code") Long building_code, @RequestBody Unit newUnit) {
+    @PostMapping("//units")
+    Unit newUnit(@RequestBody Unit newUnit) {
 
-        Project project = new Project();
-        Building building = new Building();
-
-        return companyRepository.findById(company_code).map(companyMD -> {
-            project.setCompanyMD(companyMD);
-            projectRepository.save(project);
-            return projectRepository.findById(project_code).map(project1 -> {
-                building.setProject(project1);
-                buildingRepository.save(building);
-                return buildingRepository.findById(building_code).map(building1 -> {
-                    newUnit.setBuilding(building1);
-                    return unitrepository.save(newUnit);
-                }).orElseThrow(() -> new RuntimeException("PostId " + building_code + " not found"));
-            }).orElseThrow(() -> new RuntimeException("PostId " + project_code + " not found"));
-        }).orElseThrow(() -> new RuntimeException("PostId " + company_code + " not found"));
+        return unitrepository.save(newUnit);
     }
 
 
@@ -74,23 +58,9 @@ public class UnitPostController {
         unitrepository.deleteById(unit_code);
     }
 
-    @PutMapping("/companymd/{company_code}/projects/{project_code}/buildings/{building_code}/units/{unit_code}")
-    Unit updateUnit(@RequestBody Unit newUnit, @PathVariable(value = "company_code") Long company_code,
-                    @PathVariable(value = "project_code") Long project_code,
-                    @PathVariable(value = "building_code") Long building_code, @PathVariable Long unit_code) {
+    @PutMapping("//units/{unit_code}")
+    Unit updateUnit(@RequestBody Unit newUnit, @PathVariable Long unit_code) {
 
-        Project project = new Project();
-        Building building = new Building();
-
-        return companyRepository.findById(company_code).map(companyMD -> {
-            project.setCompanyMD(companyMD);
-            projectRepository.save(project);
-            return projectRepository.findById(project_code).map(project1 -> {
-                building.setProject(project1);
-                buildingRepository.save(building);
-                return buildingRepository.findById(building_code).map(building1 -> {
-                    newUnit.setBuilding(building1);
-                    unitrepository.save(newUnit);
                     return unitrepository.findById(unit_code).map(unit -> {
                         unit.setAmount(newUnit.getAmount());
                         unit.setUnitType(newUnit.getUnitKey());
@@ -120,10 +90,10 @@ public class UnitPostController {
                         unit.setFixture(newUnit.getFixture());
                         unit.setDescription(newUnit.getDescription());
                         return unitrepository.save(newUnit);
-                    }).orElseThrow(() -> new RuntimeException("PostId " + unit_code + " not found"));
-                }).orElseThrow(() -> new RuntimeException("PostId " + building_code + " not found"));
-            }).orElseThrow(() -> new RuntimeException("PostId " + project_code + " not found"));
-        }).orElseThrow(() -> new RuntimeException("PostId " + company_code + " not found"));
+                    }).orElseGet(() -> {
+                        newUnit.setUnit_code(unit_code);
+                        return unitrepository.save(newUnit);
+                    });
     }
 
 

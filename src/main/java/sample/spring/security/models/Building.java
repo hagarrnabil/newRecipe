@@ -32,6 +32,7 @@ public class Building implements Serializable {
     private Integer numberOfFloors;
     @OneToMany(mappedBy = "building")
     private final Set<Unit> units;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
