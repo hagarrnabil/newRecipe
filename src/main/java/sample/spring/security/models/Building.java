@@ -3,16 +3,24 @@ package sample.spring.security.models;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "buildings")
+@Data
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Building implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,25 +48,8 @@ public class Building implements Serializable {
     private Project project;
 
 
-
-    public Building(Long building_code, String buildingID, String buildingDescription, String oldNumber, Date validFrom, Integer numberOfFloors, Set<Unit> units, Project project) {
-        this.building_code = building_code;
-        this.buildingID = buildingID;
-        this.buildingDescription = buildingDescription;
-        this.oldNumber = oldNumber;
-        this.validFrom = validFrom;
-        this.numberOfFloors = numberOfFloors;
-        this.units = units;
-        this.project = project;
-    }
-
     public Building(Set<Unit> units) {
         this.units = units;
-    }
-
-    public Building() {
-
-        units = null;
     }
 
     public Long getBuilding_code() {
@@ -115,6 +106,10 @@ public class Building implements Serializable {
     @JsonBackReference
     public void setProject(Project project) {
         this.project = project;
+    }
+    @JsonManagedReference
+    public Set<Unit> getUnits() {
+        return units;
     }
 
     @Override

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
@@ -11,9 +14,15 @@ import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="units")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,42 +71,6 @@ public class Unit implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("building_code")
     private Building building;
-
-    public Unit(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount, Building building) {
-        this.unit_code = unit_code;
-        this.unitKey = unitKey;
-        this.oldNumber = oldNumber;
-        this.description = description;
-        this.unitType = unitType;
-        this.toFloor = toFloor;
-        this.blockingDate = blockingDate;
-        this.blockingReason = blockingReason;
-        this.fixture = fixture;
-        this.salesPhase = salesPhase;
-        this.constructionDate = constructionDate;
-        this.destination = destination;
-        this.orientation = orientation;
-        this.builtUpArea = builtUpArea;
-        this.gardenArea = gardenArea;
-        this.numberOfRooms = numberOfRooms;
-        this.measurementValue = measurementValue;
-        this.measurements = measurements;
-        this.measurementsID = measurementsID;
-        this.measurementsDescription = measurementsDescription;
-        this.unitOfMeasurement = unitOfMeasurement;
-        this.pricingTab = pricingTab;
-        this.pricePlan = pricePlan;
-        this.price = price;
-        this.unitAdditionalPayment = unitAdditionalPayment;
-        this.conditionCode = conditionCode;
-        this.conditionDescription = conditionDescription;
-        Amount = amount;
-        this.building = building;
-    }
-
-    public Unit() {
-
-    }
 
     public Long getUnit_code() {
         return unit_code;

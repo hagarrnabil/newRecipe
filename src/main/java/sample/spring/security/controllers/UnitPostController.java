@@ -2,8 +2,13 @@ package sample.spring.security.controllers;
 
 
 import jakarta.validation.constraints.NotNull;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sample.spring.security.DTOModels.ProjectDTO;
+import sample.spring.security.DTOModels.UnitDTO;
 import sample.spring.security.models.Building;
 import sample.spring.security.models.Project;
 import sample.spring.security.models.Unit;
@@ -11,91 +16,79 @@ import sample.spring.security.repositories.BuildingRepository;
 import sample.spring.security.repositories.CompanyRepository;
 import sample.spring.security.repositories.ProjectRepository;
 import sample.spring.security.repositories.UnitRepository;
+import sample.spring.security.services.UnitService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class UnitPostController {
+    @Autowired
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private final CompanyRepository companyRepository;
-    @Autowired
-    private final ProjectRepository projectRepository;
-    @Autowired
-    private final BuildingRepository buildingRepository;
     @Autowired
     private final UnitRepository unitrepository;
+    private UnitService unitService;
 
-
-    public UnitPostController(CompanyRepository companyRepository, ProjectRepository projectRepository, BuildingRepository buildingRepository, UnitRepository unitrepository) {
-        this.companyRepository = companyRepository;
-        this.projectRepository = projectRepository;
-        this.buildingRepository = buildingRepository;
+    public UnitPostController(ModelMapper modelMapper, UnitRepository unitrepository, UnitService unitService) {
+        super();
+        this.modelMapper = modelMapper;
         this.unitrepository = unitrepository;
+        this.unitService = unitService;
     }
 
     @GetMapping("/units")
-    Iterable<Unit> all() {
-        return unitrepository.findAll();
+    public List<UnitDTO> getAllUnits() {
+
+        return unitService.getAllUnits().stream().map(unit -> modelMapper.map(unit, UnitDTO.class))
+                .collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/units/{unit_code}", method = RequestMethod.GET)
-    public Optional<Unit> findByIds(@PathVariable @NotNull Long unit_code) {
 
-        return unitrepository.findById(unit_code);
+    @GetMapping("/units/{unit_code}")
+    public ResponseEntity<UnitDTO> getUnitById(@PathVariable(name = "unit_code") Long unit_code) {
+        Optional<Unit> unit = unitService.getUnitById(unit_code);
+
+        // convert entity to DTO
+        UnitDTO unitResponse = modelMapper.map(unit, UnitDTO.class);
+
+        return ResponseEntity.ok().body(unitResponse);
     }
 
-    @PostMapping("//units")
-    Unit newUnit(@RequestBody Unit newUnit) {
+    @PostMapping("/units")
+    public ResponseEntity<UnitDTO> createUnit(@RequestBody UnitDTO unitDTO) {
 
-        return unitrepository.save(newUnit);
+        // convert DTO to entity
+        Unit unitRequest = modelMapper.map(unitDTO, Unit.class);
+
+        Unit unit = unitService.createUnit(unitRequest);
+
+        // convert entity to DTO
+        UnitDTO unitResponse = modelMapper.map(unit, UnitDTO.class);
+
+        return new ResponseEntity<UnitDTO>(unitResponse, HttpStatus.CREATED);
     }
 
 
     @DeleteMapping("/units/{unit_code}")
     void deleteUnit(@PathVariable Long unit_code) {
-        unitrepository.deleteById(unit_code);
+        unitService.deleteUnit(unit_code);
     }
 
-    @PutMapping("//units/{unit_code}")
-    Unit updateUnit(@RequestBody Unit newUnit, @PathVariable Long unit_code) {
+    @PutMapping("/units/{unit_code}")
+    public ResponseEntity<UnitDTO> updateUnit(@PathVariable long unit_code, @RequestBody UnitDTO unitDTO) {
 
-                    return unitrepository.findById(unit_code).map(unit -> {
-                        unit.setAmount(newUnit.getAmount());
-                        unit.setUnitType(newUnit.getUnitKey());
-                        unit.setUnit_code(newUnit.getUnit_code());
-                        unit.setBlockingDate(newUnit.getBlockingDate());
-                        unit.setBlockingReason(newUnit.getBlockingReason());
-                        unit.setUnitOfMeasurement(newUnit.getUnitOfMeasurement());
-                        unit.setUnitAdditionalPayment(newUnit.getUnitAdditionalPayment());
-                        unit.setBuiltUpArea(newUnit.getBuiltUpArea());
-                        unit.setConditionCode(newUnit.getConditionCode());
-                        unit.setConditionDescription(newUnit.getConditionDescription());
-                        unit.setToFloor(newUnit.getToFloor());
-                        unit.setConstructionDate(newUnit.getConstructionDate());
-                        unit.setDestination(newUnit.getDestination());
-                        unit.setGardenArea(newUnit.getGardenArea());
-                        unit.setMeasurements(newUnit.getMeasurements());
-                        unit.setPricingTab(newUnit.getPricingTab());
-                        unit.setSalesPhase(newUnit.getSalesPhase());
-                        unit.setPricePlan(newUnit.getPricePlan());
-                        unit.setOrientation(newUnit.getOrientation());
-                        unit.setOldNumber(newUnit.getOldNumber());
-                        unit.setNumberOfRooms(newUnit.getNumberOfRooms());
-                        unit.setUnitKey(newUnit.getUnitKey());
-                        unit.setMeasurementValue(newUnit.getMeasurementValue());
-                        unit.setMeasurementsID(newUnit.getMeasurementsID());
-                        unit.setMeasurementsDescription(newUnit.getMeasurementsDescription());
-                        unit.setFixture(newUnit.getFixture());
-                        unit.setDescription(newUnit.getDescription());
-                        return unitrepository.save(newUnit);
-                    }).orElseGet(() -> {
-                        newUnit.setUnit_code(unit_code);
-                        return unitrepository.save(newUnit);
-                    });
+        // convert DTO to Entity
+        Unit unitRequest = modelMapper.map(unitDTO, Unit.class);
+
+        Unit unit = unitService.updateUnit(unit_code, unitRequest);
+
+        // entity to DTO
+        UnitDTO unitResponse = modelMapper.map(unit, UnitDTO.class);
+
+        return ResponseEntity.ok().body(unitResponse);
     }
-
 
     @RequestMapping(method = RequestMethod.GET, value = "/units/search")
     @ResponseBody

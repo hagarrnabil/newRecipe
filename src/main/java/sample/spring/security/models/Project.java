@@ -3,6 +3,9 @@ package sample.spring.security.models;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
@@ -12,6 +15,10 @@ import java.util.*;
 
 @Entity
 @Table(name = "projects")
+@Data
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Project implements Serializable {
 
     @Id
@@ -22,8 +29,10 @@ public class Project implements Serializable {
     @Column(unique = true, length = 8, columnDefinition = "char(8)", nullable = false)
     @Length(max = 8)
     private String projectID;
+
     @NotNull
     private String projectDescription;
+
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
 
@@ -32,25 +41,12 @@ public class Project implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("company_code")
     private CompanyMD companyMD;
+
     @OneToMany(mappedBy = "project")
     private final Set<Building> buildings;
 
-    public Project(Long project_code, String projectID, String projectDescription, Date validFrom, CompanyMD companyMD, Set<Building> buildings) {
-        this.project_code = project_code;
-        this.projectID = projectID;
-        this.projectDescription = projectDescription;
-        this.validFrom = validFrom;
-        this.companyMD = companyMD;
-        this.buildings = buildings;
-    }
-
     public Project(Set<Building> buildings) {
         this.buildings = buildings;
-    }
-
-    public Project() {
-
-        buildings = null;
     }
 
     public Long getProject_code() {
@@ -76,7 +72,6 @@ public class Project implements Serializable {
     public void setProjectDescription(String projectDescription) {
         this.projectDescription = projectDescription;
     }
-
     @JsonBackReference
     public CompanyMD getCompanyMD() {
         return companyMD;
@@ -86,6 +81,10 @@ public class Project implements Serializable {
         this.companyMD = companyMD;
     }
 
+    @JsonManagedReference
+    public Set<Building> getBuildings() {
+        return buildings;
+    }
 
     public Date getValidFrom() {
         return validFrom;
@@ -103,7 +102,6 @@ public class Project implements Serializable {
                 ", projectID='" + projectID + '\'' +
                 ", projectDescription='" + projectDescription + '\'' +
                 ", validFrom=" + validFrom +
-                ", companyMD=" + companyMD +
                 '}';
     }
 }

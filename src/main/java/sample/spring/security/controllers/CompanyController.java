@@ -1,57 +1,86 @@
 package sample.spring.security.controllers;
 
 import jakarta.validation.constraints.NotNull;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sample.spring.security.DTOModels.CompanyDTO;
+import sample.spring.security.DTOModels.ProjectDTO;
 import sample.spring.security.models.CompanyMD;
+import sample.spring.security.models.Project;
 import sample.spring.security.repositories.CompanyRepository;
+import sample.spring.security.services.CompanyService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class CompanyController {
 
     @Autowired
     private final CompanyRepository companyRepository;
+     @Autowired
+     private final ModelMapper modelMapper;
+     private CompanyService companyService;
 
-    public CompanyController(CompanyRepository companyRepository) {
+    public CompanyController(CompanyRepository companyRepository, ModelMapper modelMapper, CompanyService companyService) {
+        super();
         this.companyRepository = companyRepository;
+        this.modelMapper = modelMapper;
+        this.companyService = companyService;
     }
 
     @GetMapping("/companymd")
-    Iterable<CompanyMD> all() {
-        return companyRepository.findAll();
+    public List<CompanyDTO> getAllCompanyMD() {
+
+        return companyService.getAllCompanyMD().stream().map(companyMD -> modelMapper.map(companyMD, CompanyDTO.class))
+                .collect(Collectors.toList());
+    }
+    @GetMapping("/companymd/{company_code}")
+    public ResponseEntity<CompanyDTO> getCompanyMDtById(@PathVariable(name = "company_code") Long company_code) {
+        Optional<CompanyMD> companyMD = companyService.getCompanyMDById(company_code);
+
+        // convert entity to DTO
+        CompanyDTO companyResponse = modelMapper.map(companyMD, CompanyDTO.class);
+
+        return ResponseEntity.ok().body(companyResponse);
     }
 
-    @RequestMapping(value = "/companymd/{company_code}", method = RequestMethod.GET)
-    public Optional<CompanyMD> findByIds(@PathVariable @NotNull Long company_code) {
-
-        return companyRepository.findById(company_code);
-    }
 
     @PostMapping("/companymd")
-    CompanyMD newCompanyCode(@RequestBody CompanyMD newCompanyCode) {
-        return companyRepository.save(newCompanyCode);
+    public ResponseEntity<CompanyDTO> createCompanyMD(@RequestBody CompanyDTO companyDTO) {
+
+        // convert DTO to entity
+        CompanyMD companyRequest = modelMapper.map(companyDTO, CompanyMD.class);
+
+        CompanyMD companyMD = companyService.createCompanyMD(companyRequest);
+
+        // convert entity to DTO
+        CompanyDTO companyResponse = modelMapper.map(companyMD, CompanyDTO.class);
+
+        return new ResponseEntity<CompanyDTO>(companyResponse, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/companymd/{company_code}")
-    void deleteCompanyCode(@PathVariable Long company_code) {
-        companyRepository.deleteById(company_code);
+    void deleteCompanyMD(@PathVariable Long company_code) {
+        companyService.deleteCompanyMD(company_code);
     }
 
     @PutMapping("/companymd/{company_code}")
-    CompanyMD updateCompanyCode(@RequestBody CompanyMD newCompanyCode, @PathVariable Long company_code) {
+    public ResponseEntity<CompanyDTO> updateCompanyMD(@PathVariable long company_code, @RequestBody CompanyDTO companyDTO) {
 
-        return companyRepository.findById(company_code).map(companyCode -> {
-            companyCode.setCompany_code(newCompanyCode.getCompany_code());
-            companyCode.setCompanyCodeDescription(newCompanyCode.getCompanyCodeDescription());
-            companyCode.setCompanyCodeID(newCompanyCode.getCompanyCodeID());
-            return companyRepository.save(newCompanyCode);
-        }).orElseGet(() -> {
-            newCompanyCode.setCompany_code(company_code);
-            return companyRepository.save(newCompanyCode);
-        });
+        // convert DTO to Entity
+        CompanyMD companyRequest = modelMapper.map(companyDTO, CompanyMD.class);
+
+        CompanyMD companyMD = companyService.updateCompanyMD(company_code, companyRequest);
+
+        // entity to DTO
+        CompanyDTO companyResponse = modelMapper.map(companyMD, CompanyDTO.class);
+
+        return ResponseEntity.ok().body(companyResponse);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/companymd/search")

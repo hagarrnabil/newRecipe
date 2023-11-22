@@ -1,69 +1,82 @@
 package sample.spring.security.controllers;
 
-import jakarta.validation.constraints.NotNull;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sample.spring.security.DTOModels.BuildingDTO;
 import sample.spring.security.models.Building;
-import sample.spring.security.models.Project;
 import sample.spring.security.repositories.BuildingRepository;
-import sample.spring.security.repositories.CompanyRepository;
-import sample.spring.security.repositories.ProjectRepository;
+import sample.spring.security.services.BuildingService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class BuildingController {
     @Autowired
-    private final CompanyRepository companyRepository;
-    @Autowired
-    private  final ProjectRepository projectRepository;
+    private final ModelMapper modelMapper;
     @Autowired
     private final BuildingRepository buildingRepository;
+    private BuildingService buildingService;
 
-    public BuildingController(CompanyRepository companyRepository, ProjectRepository projectRepository, BuildingRepository buildingRepository) {
-        this.companyRepository = companyRepository;
-        this.projectRepository = projectRepository;
+    public BuildingController(ModelMapper modelMapper, BuildingRepository buildingRepository, BuildingService buildingService) {
+        super();
+        this.modelMapper = modelMapper;
         this.buildingRepository = buildingRepository;
+        this.buildingService = buildingService;
     }
 
     @GetMapping("/buildings")
-    Iterable<Building> all() {
-        return buildingRepository.findAll();
+    public List<BuildingDTO> getAllBuildings() {
+
+        return buildingService.getAllBuildings().stream().map(building -> modelMapper.map(building, BuildingDTO.class))
+                .collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/buildings/{building_code}", method = RequestMethod.GET)
-    public Optional<Building> findByIds(@PathVariable @NotNull Long building_code) {
+    @GetMapping("/buildings/{building_code}")
+    public ResponseEntity<BuildingDTO> getBuildingById(@PathVariable(name = "building_code") Long building_code) {
+        Optional<Building> building = buildingService.getBuildingById(building_code);
 
-        return buildingRepository.findById(building_code);
+        // convert entity to DTO
+        BuildingDTO buildingResponse = modelMapper.map(building, BuildingDTO.class);
+
+        return ResponseEntity.ok().body(buildingResponse);
     }
 
     @PostMapping("/buildings")
-    Building newBuilding(@RequestBody Building newBuilding) {
+    public ResponseEntity<BuildingDTO> createBuilding(@RequestBody BuildingDTO buildingDTO) {
 
-        return buildingRepository.save(newBuilding);
+        // convert DTO to entity
+        Building buildingRequest = modelMapper.map(buildingDTO, Building.class);
+
+        Building building = buildingService.createBuilding(buildingRequest);
+
+        // convert entity to DTO
+        BuildingDTO buildingResponse = modelMapper.map(building, BuildingDTO.class);
+
+        return new ResponseEntity<BuildingDTO>(buildingResponse, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/buildings/{building_code}")
     void deleteBuilding(@PathVariable Long building_code) {
-        buildingRepository.deleteById(building_code);
+        buildingService.deleteBuilding(building_code);
     }
 
     @PutMapping("/buildings/{building_code}")
-    Building updateBuilding(@RequestBody Building newBuilding, @PathVariable Long building_code) {
+    public ResponseEntity<BuildingDTO> updateBuilding(@PathVariable long building_code, @RequestBody BuildingDTO buildingDTO) {
 
-                return buildingRepository.findById(building_code).map(building -> {
-                    building.setBuilding_code(newBuilding.getBuilding_code());
-                    building.setBuildingDescription(newBuilding.getBuildingDescription());
-                    building.setBuildingID(newBuilding.getBuildingID());
-                    building.setNumberOfFloors(newBuilding.getNumberOfFloors());
-                    building.setValidFrom(newBuilding.getValidFrom());
-                    building.setOldNumber(newBuilding.getOldNumber());
-                    return buildingRepository.save(newBuilding);
-                }).orElseGet(() -> {
-                    newBuilding.setBuilding_code(building_code);
-                    return buildingRepository.save(newBuilding);
-                });
+        // convert DTO to Entity
+        Building buildingRequest = modelMapper.map(buildingDTO, Building.class);
+
+        Building building = buildingService.updateBuilding(building_code, buildingRequest);
+
+        // entity to DTO
+        BuildingDTO buildingResponse = modelMapper.map(building, BuildingDTO.class);
+
+        return ResponseEntity.ok().body(buildingResponse);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/buildings/search")

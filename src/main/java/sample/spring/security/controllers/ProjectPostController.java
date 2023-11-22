@@ -1,66 +1,91 @@
 package sample.spring.security.controllers;
 
 
-import jakarta.validation.constraints.NotNull;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sample.spring.security.DTOModels.ProjectDTO;
 import sample.spring.security.models.Project;
-import sample.spring.security.repositories.CompanyRepository;
 import sample.spring.security.repositories.ProjectRepository;
+import sample.spring.security.services.ProjectService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class ProjectPostController {
 
     @Autowired
-    private final CompanyRepository companyRepository;
+    private final ModelMapper modelMapper;
     @Autowired
     private final ProjectRepository projectrepository;
+    private ProjectService projectService;
 
-    public ProjectPostController(CompanyRepository companyRepository, ProjectRepository projectrepository) {
-        this.companyRepository = companyRepository;
+    public ProjectPostController(ModelMapper modelMapper, ProjectRepository projectrepository, ProjectService projectService) {
+        super();
+        this.modelMapper = modelMapper;
         this.projectrepository = projectrepository;
+        this.projectService = projectService;
     }
 
     @GetMapping("/projects")
-    Iterable<Project> all() {
-        return projectrepository.findAll();
+    public List<ProjectDTO> getAllProjects() {
+
+        return projectService.getAllProjects().stream().map(project -> modelMapper.map(project, ProjectDTO.class))
+                .collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/projects/{project_code}", method = RequestMethod.GET)
-    public Optional<Project> findByIds(@PathVariable @NotNull Long project_code) {
 
-        return projectrepository.findById(project_code);
+    @GetMapping("/projects/{project_code}")
+    public ResponseEntity<ProjectDTO> getProjectById(@PathVariable(name = "project_code") Long project_code) {
+        Optional<Project> project = projectService.getProjectById(project_code);
+
+        // convert entity to DTO
+        ProjectDTO projectResponse = modelMapper.map(project, ProjectDTO.class);
+
+        return ResponseEntity.ok().body(projectResponse);
     }
+
+
 
     @PostMapping("/projects")
-    Project newProject(@RequestBody Project newProject) {
-            return projectrepository.save(newProject);
+    public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectDTO projectDTO) {
+
+        // convert DTO to entity
+        Project projectRequest = modelMapper.map(projectDTO, Project.class);
+
+        Project project = projectService.createProject(projectRequest);
+
+        // convert entity to DTO
+        ProjectDTO projectResponse = modelMapper.map(project, ProjectDTO.class);
+
+        return new ResponseEntity<ProjectDTO>(projectResponse, HttpStatus.CREATED);
     }
+
 
     @DeleteMapping("/projects/{project_code}")
     void deleteProject(@PathVariable Long project_code) {
-        projectrepository.deleteById(project_code);
+        projectService.deleteProject(project_code);
     }
 
 
     @PutMapping("/projects/{project_code}")
-    Project updateProject(@RequestBody Project newProject, @PathVariable Long project_code) {
+    public ResponseEntity<ProjectDTO> updateProject(@PathVariable long project_code, @RequestBody ProjectDTO projectDTO) {
 
-        return projectrepository.findById(project_code).map(project -> {
-            project.setProjectID(newProject.getProjectID());
-            project.setProject_code(newProject.getProject_code());
-            project.setProjectDescription(newProject.getProjectDescription());
-            project.setValidFrom(newProject.getValidFrom());
-            return projectrepository.save(newProject);
-        }).orElseGet(() -> {
-            newProject.setProject_code(project_code);
-            return projectrepository.save(newProject);
-        });
+        // convert DTO to Entity
+        Project projectRequest = modelMapper.map(projectDTO, Project.class);
+
+        Project project = projectService.updateProject(project_code, projectRequest);
+
+        // entity to DTO
+        ProjectDTO projectResponse = modelMapper.map(project, ProjectDTO.class);
+
+        return ResponseEntity.ok().body(projectResponse);
     }
+
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/projects/search")
@@ -69,5 +94,6 @@ public class ProjectPostController {
 
         return projectrepository.search(keyword);
     }
+
 
 }

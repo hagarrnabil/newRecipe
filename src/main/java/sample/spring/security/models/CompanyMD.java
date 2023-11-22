@@ -1,8 +1,12 @@
 package sample.spring.security.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -10,6 +14,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "companyMD")
+@Data
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CompanyMD implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,19 +29,14 @@ public class CompanyMD implements Serializable {
     private String companyCodeID;
     @NotNull
     private String companyCodeDescription;
+
     @OneToMany(mappedBy = "companyMD")
     private final Set<Project> projects;
 
-    public CompanyMD() {
-        projects = null;
-    }
-
-    public CompanyMD(Long company_code, String companyCodeID, String companyCodeDescription, Set<Project> projects) {
-        this.company_code = company_code;
-        this.companyCodeID = companyCodeID;
-        this.companyCodeDescription = companyCodeDescription;
+    public CompanyMD(Set<Project> projects) {
         this.projects = projects;
     }
+
 
     public Long getCompany_code() {
         return company_code;
@@ -58,7 +61,10 @@ public class CompanyMD implements Serializable {
     public void setCompanyCodeDescription(String companyCodeDescription) {
         this.companyCodeDescription = companyCodeDescription;
     }
-
+    @JsonManagedReference
+    public Set<Project> getProjects() {
+        return projects;
+    }
 
     @Override
     public String toString() {
