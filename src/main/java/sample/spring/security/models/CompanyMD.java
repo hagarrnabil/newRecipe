@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -15,12 +13,15 @@ import java.util.Set;
 @Entity
 @Table(name = "companyMD")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CompanyMD implements Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "company_code")
     private Long company_code;
 
@@ -37,6 +38,11 @@ public class CompanyMD implements Serializable {
         this.projects = projects;
     }
 
+//    public CompanyMD addProject (Project project) {
+//        projects.add(project);
+//        project.setCompanyMD(this);
+//        return this;
+//    }
 
     public Long getCompany_code() {
         return company_code;

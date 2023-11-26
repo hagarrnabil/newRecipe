@@ -13,7 +13,7 @@ public interface UnitRepository extends JpaRepository<Unit,Long> {
             "u.measurements, ' ', u.measurementsDescription, ' ', u.measurementsID, ' ' , u.measurementValue" +
             ", ' ', u.numberOfRooms, ' ', u.oldNumber, ' ', u.orientation, ' ', u.price, ' ', u.pricePlan" +
             ", ' ' ,u.pricingTab, ' ' , u.salesPhase, ' ' ,u.unitKey, ' ', u.toFloor, ' ', u.unitAdditionalPayment" +
-            ", ' ', u.unit_code, ' ', u.unitOfMeasurement, ' ', u.unitType) LIKE %?1%")
+            ", ' ', u.unit_code, ' ', u.unitOfMeasurement, ' ', u.unitType, ' ' , u.building) LIKE %?1%")
     public List<Unit> search(String keyword);
 
 }

@@ -8,6 +8,7 @@
 /home/hagar/newRecipe/src/main/java/sample/spring/security/services/ProjectService.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/controllers/UnitUsageController.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/repositories/ProjectRepository.java
+/home/hagar/newRecipe/src/main/java/sample/spring/security/services/CompanyService.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/controllers/IndexController.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/models/UnitStatus.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/controllers/UnitFloorController.java
@@ -22,6 +23,7 @@
 /home/hagar/newRecipe/src/main/java/sample/spring/security/models/Project.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/controllers/GetController.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/controllers/UnitStatusController.java
+/home/hagar/newRecipe/src/main/java/sample/spring/security/DTOModels/CompanyDTO.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/repositories/UnitFloorRepository.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/DTOModels/UnitDTO.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/TestController.java
@@ -30,6 +32,7 @@
 /home/hagar/newRecipe/src/main/java/sample/spring/security/repositories/PaymentPlan.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/repositories/UnitRepository.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/models/PaymentPlan.java
+/home/hagar/newRecipe/src/main/java/sample/spring/security/services/CompanyServieImpl.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/controllers/PaymentPlanController.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/controllers/BuildingController.java
 /home/hagar/newRecipe/src/main/java/sample/spring/security/DTOModels/ProjectDTO.java

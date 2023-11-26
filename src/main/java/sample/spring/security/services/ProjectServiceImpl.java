@@ -1,7 +1,10 @@
 package sample.spring.security.services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import sample.spring.security.models.CompanyMD;
 import sample.spring.security.models.Project;
+import sample.spring.security.repositories.CompanyRepository;
 import sample.spring.security.repositories.ProjectRepository;
 
 import java.util.List;
@@ -24,6 +27,8 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public Project createProject(Project project) {
+//        CompanyMD companyMD = new CompanyMD();
+//        companyMD.addProject(project);
         return projectRepository.save(project);
     }
 

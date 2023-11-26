@@ -1,27 +1,30 @@
 package sample.spring.security.DTOModels;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-@NoArgsConstructor
+@Data
 public class BuildingDTO {
     private Long building_code;
     private String buildingID;
     private String buildingDescription;
     private String oldNumber;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
     private Integer numberOfFloors;
     private Long project_code;
 
-    public BuildingDTO(Long building_code, String buildingID, String buildingDescription, String oldNumber, Date validFrom, Integer numberOfFloors, Long project_code) {
-        this.building_code = building_code;
-        this.buildingID = buildingID;
-        this.buildingDescription = buildingDescription;
-        this.oldNumber = oldNumber;
-        this.validFrom = validFrom;
-        this.numberOfFloors = numberOfFloors;
-        this.project_code = project_code;
-    }
+//    public BuildingDTO(Long building_code, String buildingID, String buildingDescription, String oldNumber, Date validFrom, Integer numberOfFloors, Long project_code) {
+//        this.building_code = building_code;
+//        this.buildingID = buildingID;
+//        this.buildingDescription = buildingDescription;
+//        this.oldNumber = oldNumber;
+//        this.validFrom = validFrom;
+//        this.numberOfFloors = numberOfFloors;
+//        this.project_code = project_code;
+//    }
 
     public Long getBuilding_code() {
         return building_code;

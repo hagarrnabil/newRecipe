@@ -20,16 +20,15 @@ import java.util.stream.Collectors;
 @RestController
 public class CompanyController {
 
-    @Autowired
-    private final CompanyRepository companyRepository;
      @Autowired
-     private final ModelMapper modelMapper;
+     private final CompanyRepository companyRepository;
+     @Autowired
+     private ModelMapper modelMapper;
      private CompanyService companyService;
 
-    public CompanyController(CompanyRepository companyRepository, ModelMapper modelMapper, CompanyService companyService) {
+    public CompanyController(CompanyRepository companyRepository, CompanyService companyService) {
         super();
         this.companyRepository = companyRepository;
-        this.modelMapper = modelMapper;
         this.companyService = companyService;
     }
 

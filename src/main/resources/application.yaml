@@ -20,10 +20,8 @@ spring:
     password: password
 #        url: jdbc:postgresql://172.17.0.3:5432/postgres
     username: postgres
-    url: jdbc:postgresql://172.17.0.2:5432/postgres
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://172.17.0.3:5432/postgres
+
   #  h2:
   #    console:
   #      enabled: true

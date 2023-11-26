@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class ProjectPostController {
 
     @Autowired
-    private final ModelMapper modelMapper;
+    private ModelMapper modelMapper;
     @Autowired
     private final ProjectRepository projectrepository;
     private ProjectService projectService;

@@ -3,9 +3,7 @@ package sample.spring.security.models;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
@@ -18,6 +16,8 @@ import java.util.Set;
 @Entity
 @Table(name = "buildings")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -51,6 +51,7 @@ public class Building implements Serializable {
     public Building(Set<Unit> units) {
         this.units = units;
     }
+
 
     public Long getBuilding_code() {
         return building_code;

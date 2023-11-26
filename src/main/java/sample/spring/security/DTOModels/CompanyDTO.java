@@ -1,8 +1,9 @@
 package sample.spring.security.DTOModels;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+@Data
 
 public class CompanyDTO {
     private Long company_code;
@@ -11,11 +12,11 @@ public class CompanyDTO {
 
     private String companyCodeDescription;
 
-    public CompanyDTO(Long company_code, String companyCodeID, String companyCodeDescription) {
-        this.company_code = company_code;
-        this.companyCodeID = companyCodeID;
-        this.companyCodeDescription = companyCodeDescription;
-    }
+//    public CompanyDTO(Long company_code, String companyCodeID, String companyCodeDescription) {
+//        this.company_code = company_code;
+//        this.companyCodeID = companyCodeID;
+//        this.companyCodeDescription = companyCodeDescription;
+//    }
 
     public Long getCompany_code() {
         return company_code;

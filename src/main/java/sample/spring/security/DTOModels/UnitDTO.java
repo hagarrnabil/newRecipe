@@ -1,33 +1,31 @@
 package sample.spring.security.DTOModels;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@NoArgsConstructor
+@Data
 public class UnitDTO {
     private Long unit_code;
-
-
     private String unitKey;
-
     private Integer oldNumber;
-
     private String description;
     private String unitType;
     private Integer toFloor;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date blockingDate;
     private String blockingReason;
     private String fixture;
     private String salesPhase;
-
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date constructionDate;
     private String destination;
     private String orientation;
     private String builtUpArea;
     private String gardenArea;
-
     private Integer numberOfRooms;
     private Integer measurementValue;
     private Integer measurements;
@@ -43,37 +41,37 @@ public class UnitDTO {
     private Integer Amount;
     private Long building_code;
 
-    public UnitDTO(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount, Long building_code) {
-        this.unit_code = unit_code;
-        this.unitKey = unitKey;
-        this.oldNumber = oldNumber;
-        this.description = description;
-        this.unitType = unitType;
-        this.toFloor = toFloor;
-        this.blockingDate = blockingDate;
-        this.blockingReason = blockingReason;
-        this.fixture = fixture;
-        this.salesPhase = salesPhase;
-        this.constructionDate = constructionDate;
-        this.destination = destination;
-        this.orientation = orientation;
-        this.builtUpArea = builtUpArea;
-        this.gardenArea = gardenArea;
-        this.numberOfRooms = numberOfRooms;
-        this.measurementValue = measurementValue;
-        this.measurements = measurements;
-        this.measurementsID = measurementsID;
-        this.measurementsDescription = measurementsDescription;
-        this.unitOfMeasurement = unitOfMeasurement;
-        this.pricingTab = pricingTab;
-        this.pricePlan = pricePlan;
-        this.price = price;
-        this.unitAdditionalPayment = unitAdditionalPayment;
-        this.conditionCode = conditionCode;
-        this.conditionDescription = conditionDescription;
-        Amount = amount;
-        this.building_code = building_code;
-    }
+//    public UnitDTO(Long unit_code, String unitKey, Integer oldNumber, String description, String unitType, Integer toFloor, Date blockingDate, String blockingReason, String fixture, String salesPhase, Date constructionDate, String destination, String orientation, String builtUpArea, String gardenArea, Integer numberOfRooms, Integer measurementValue, Integer measurements, Integer measurementsID, String measurementsDescription, String unitOfMeasurement, Integer pricingTab, String pricePlan, Integer price, Integer unitAdditionalPayment, String conditionCode, String conditionDescription, Integer amount, Long building_code) {
+//        this.unit_code = unit_code;
+//        this.unitKey = unitKey;
+//        this.oldNumber = oldNumber;
+//        this.description = description;
+//        this.unitType = unitType;
+//        this.toFloor = toFloor;
+//        this.blockingDate = blockingDate;
+//        this.blockingReason = blockingReason;
+//        this.fixture = fixture;
+//        this.salesPhase = salesPhase;
+//        this.constructionDate = constructionDate;
+//        this.destination = destination;
+//        this.orientation = orientation;
+//        this.builtUpArea = builtUpArea;
+//        this.gardenArea = gardenArea;
+//        this.numberOfRooms = numberOfRooms;
+//        this.measurementValue = measurementValue;
+//        this.measurements = measurements;
+//        this.measurementsID = measurementsID;
+//        this.measurementsDescription = measurementsDescription;
+//        this.unitOfMeasurement = unitOfMeasurement;
+//        this.pricingTab = pricingTab;
+//        this.pricePlan = pricePlan;
+//        this.price = price;
+//        this.unitAdditionalPayment = unitAdditionalPayment;
+//        this.conditionCode = conditionCode;
+//        this.conditionDescription = conditionDescription;
+//        Amount = amount;
+//        this.building_code = building_code;
+//    }
 
     public Long getUnit_code() {
         return unit_code;

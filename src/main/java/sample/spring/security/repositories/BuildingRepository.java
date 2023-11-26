@@ -7,6 +7,6 @@ import sample.spring.security.models.Building;
 import java.util.List;
 
 public interface BuildingRepository extends JpaRepository<Building,Long> {
-    @Query("SELECT b FROM Building b WHERE CONCAT(b.validFrom, ' ', b.oldNumber, ' ', b.numberOfFloors, ' ', b.buildingID, ' ', b.buildingDescription, ' ', b.building_code, ' ',b.units) LIKE %?1%")
+    @Query("SELECT b FROM Building b WHERE CONCAT(b.validFrom, ' ', b.oldNumber, ' ', b.numberOfFloors, ' ', b.buildingID, ' ', b.buildingDescription, ' ', b.building_code, ' ',b.units,' ',b.project) LIKE %?1%")
     public List<Building> search(String keyword);
 }

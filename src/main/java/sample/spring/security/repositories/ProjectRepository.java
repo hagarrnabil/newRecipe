@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface ProjectRepository extends JpaRepository<Project, Long>{
-    @Query("SELECT p FROM Project p WHERE CONCAT(p.project_code, ' ', p.projectID, ' ', p.projectDescription, ' ', p.validFrom,' ', p.buildings) LIKE %?1%")
+    @Query("SELECT p FROM Project p WHERE CONCAT(p.project_code, ' ', p.projectID, ' ', p.projectDescription, ' ', p.validFrom) LIKE %?1%")
     public List<Project> search(String keyword);
 
 }

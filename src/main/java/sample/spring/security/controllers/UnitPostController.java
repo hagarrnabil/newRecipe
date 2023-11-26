@@ -25,15 +25,14 @@ import java.util.stream.Collectors;
 @RestController
 public class UnitPostController {
     @Autowired
-    private final ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     @Autowired
     private final UnitRepository unitrepository;
     private UnitService unitService;
 
-    public UnitPostController(ModelMapper modelMapper, UnitRepository unitrepository, UnitService unitService) {
+    public UnitPostController(UnitRepository unitrepository, UnitService unitService) {
         super();
-        this.modelMapper = modelMapper;
         this.unitrepository = unitrepository;
         this.unitService = unitService;
     }
