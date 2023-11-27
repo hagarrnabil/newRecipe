@@ -20,15 +20,14 @@ import java.util.stream.Collectors;
 @RestController
 public class CompanyController {
 
-     @Autowired
-     private final CompanyRepository companyRepository;
+//     @Autowired
+//     private final CompanyRepository companyRepository;
      @Autowired
      private ModelMapper modelMapper;
      private CompanyService companyService;
 
-    public CompanyController(CompanyRepository companyRepository, CompanyService companyService) {
+    public CompanyController(CompanyService companyService) {
         super();
-        this.companyRepository = companyRepository;
         this.companyService = companyService;
     }
 
@@ -82,11 +81,11 @@ public class CompanyController {
         return ResponseEntity.ok().body(companyResponse);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/companymd/search")
-    @ResponseBody
-    public List<CompanyMD> Search(@RequestParam String keyword) {
-
-        return companyRepository.search(keyword);
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/companymd/search")
+//    @ResponseBody
+//    public List<CompanyMD> Search(@RequestParam String keyword) {
+//
+//        return companyRepository.search(keyword);
+//    }
 
 }

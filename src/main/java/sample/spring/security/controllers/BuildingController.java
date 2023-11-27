@@ -17,15 +17,11 @@ import java.util.stream.Collectors;
 @RestController
 public class BuildingController {
     @Autowired
-    private final ModelMapper modelMapper;
-    @Autowired
-    private final BuildingRepository buildingRepository;
+    private ModelMapper modelMapper;
     private BuildingService buildingService;
 
-    public BuildingController(ModelMapper modelMapper, BuildingRepository buildingRepository, BuildingService buildingService) {
+    public BuildingController(BuildingService buildingService) {
         super();
-        this.modelMapper = modelMapper;
-        this.buildingRepository = buildingRepository;
         this.buildingService = buildingService;
     }
 
@@ -79,11 +75,11 @@ public class BuildingController {
         return ResponseEntity.ok().body(buildingResponse);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/buildings/search")
-    @ResponseBody
-    public List<Building> Search(@RequestParam String keyword) {
-
-        return buildingRepository.search(keyword);
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/buildings/search")
+//    @ResponseBody
+//    public List<Building> Search(@RequestParam String keyword) {
+//
+//        return buildingRepository.search(keyword);
+//    }
 
 }

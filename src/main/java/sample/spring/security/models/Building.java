@@ -10,17 +10,13 @@ import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "buildings")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Building implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,14 +26,19 @@ public class Building implements Serializable {
     @Column(unique = true, length = 8, columnDefinition = "char(8)", nullable = false)
     @Length(max = 8)
     private String buildingID;
+
     @NotNull
     private String buildingDescription;
+
     @Column(length = 8, columnDefinition = "char(8)")
     @Length(max = 8)
     private String oldNumber;
+
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
+
     private Integer numberOfFloors;
+
     @OneToMany(mappedBy = "building")
     private final Set<Unit> units;
 
@@ -52,6 +53,10 @@ public class Building implements Serializable {
         this.units = units;
     }
 
+//    public Building() {
+//
+//        units = null;
+//    }
 
     public Long getBuilding_code() {
         return building_code;
@@ -107,10 +112,6 @@ public class Building implements Serializable {
     @JsonBackReference
     public void setProject(Project project) {
         this.project = project;
-    }
-    @JsonManagedReference
-    public Set<Unit> getUnits() {
-        return units;
     }
 
     @Override

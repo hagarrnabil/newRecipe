@@ -28,7 +28,7 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public Project createProject(Project project) {
 //        CompanyMD companyMD = new CompanyMD();
-//        companyMD.addProject(project);
+//        project.setCompanyMD(companyMD);
         return projectRepository.save(project);
     }
 

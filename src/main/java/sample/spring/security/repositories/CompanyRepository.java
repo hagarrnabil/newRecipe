@@ -7,6 +7,6 @@ import sample.spring.security.models.CompanyMD;
 import java.util.List;
 
 public interface CompanyRepository extends JpaRepository<CompanyMD, Long> {
-    @Query("SELECT c FROM CompanyMD c WHERE CONCAT(c.companyCodeDescription, ' ', c.companyCodeID, ' ', c.company_code, ' ', c.projects) LIKE %?1%")
-    public List<CompanyMD> search(String keyword);
+//    @Query("SELECT c FROM CompanyMD c WHERE CONCAT(c.companyCodeDescription, ' ', c.companyCodeID, ' ', c.company_code, ' ', c.projects) LIKE %?1%")
+//    public List<CompanyMD> search(String keyword);
 }

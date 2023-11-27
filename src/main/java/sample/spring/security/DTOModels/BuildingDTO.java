@@ -15,6 +15,8 @@ public class BuildingDTO {
     private Date validFrom;
     private Integer numberOfFloors;
     private Long project_code;
+    private String buildTypeDesc;
+
 
 //    public BuildingDTO(Long building_code, String buildingID, String buildingDescription, String oldNumber, Date validFrom, Integer numberOfFloors, Long project_code) {
 //        this.building_code = building_code;
@@ -25,6 +27,14 @@ public class BuildingDTO {
 //        this.numberOfFloors = numberOfFloors;
 //        this.project_code = project_code;
 //    }
+
+    public String getBuildTypeDesc() {
+        return buildTypeDesc;
+    }
+
+    public void setBuildTypeDesc(String buildTypeDesc) {
+        this.buildTypeDesc = buildTypeDesc;
+    }
 
     public Long getBuilding_code() {
         return building_code;

@@ -11,9 +11,9 @@ public class ProjectDTO {
     private Long project_code;
     private String projectID;
     private String projectDescription;
-    @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
     private Long company_code;
+    private String profitDescription;
 
 //    public ProjectDTO(Long project_code, String projectID, String projectDescription, Date validFrom, Long company_code) {
 //        this.project_code = project_code;
@@ -22,6 +22,14 @@ public class ProjectDTO {
 //        this.validFrom = validFrom;
 //        this.company_code = company_code;
 //    }
+
+    public String getProfitDescription() {
+        return profitDescription;
+    }
+
+    public void setProfitDescription(String profitDescription) {
+        this.profitDescription = profitDescription;
+    }
 
     public Long getProject_code() {
         return project_code;

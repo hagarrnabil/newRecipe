@@ -14,11 +14,8 @@ import java.util.*;
 @Entity
 @Table(name = "projects")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Project implements Serializable {
 
     @Id
@@ -32,7 +29,6 @@ public class Project implements Serializable {
 
     @NotNull
     private String projectDescription;
-
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date validFrom;
 
@@ -45,10 +41,25 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "project")
     private final Set<Building> buildings;
 
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "projects_profit", joinColumns = {@JoinColumn(name = "project_code")},
+            inverseJoinColumns = {@JoinColumn(name = "profit_code")})
+    Set < Profit > profits = new HashSet < Profit > ();
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "projects_cities", joinColumns = {@JoinColumn(name = "project_code")},
+            inverseJoinColumns = {@JoinColumn(name = "cities_code")})
+    Set < Cities > citiesSet = new HashSet < Cities > ();
+
+
     public Project(Set<Building> buildings) {
         this.buildings = buildings;
     }
 
+//    public Project() {
+//
+//        buildings = null;
+//    }
 
     public Long getProject_code() {
         return project_code;
@@ -73,6 +84,7 @@ public class Project implements Serializable {
     public void setProjectDescription(String projectDescription) {
         this.projectDescription = projectDescription;
     }
+
     @JsonBackReference
     public CompanyMD getCompanyMD() {
         return companyMD;
@@ -82,10 +94,6 @@ public class Project implements Serializable {
         this.companyMD = companyMD;
     }
 
-    @JsonManagedReference
-    public Set<Building> getBuildings() {
-        return buildings;
-    }
 
     public Date getValidFrom() {
         return validFrom;
@@ -103,6 +111,7 @@ public class Project implements Serializable {
                 ", projectID='" + projectID + '\'' +
                 ", projectDescription='" + projectDescription + '\'' +
                 ", validFrom=" + validFrom +
+                ", companyMD=" + companyMD +
                 '}';
     }
 }

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "cities")
@@ -20,6 +22,8 @@ public class Cities implements Serializable {
     @NotNull
     private String regionalLocation;
 
+    @ManyToMany(mappedBy = "citiesSet", cascade = { CascadeType.ALL })
+    private Set<Project> projects = new HashSet<Project>();
     public Cities() {
     }
 

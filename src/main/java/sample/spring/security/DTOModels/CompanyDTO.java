@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-
 public class CompanyDTO {
     private Long company_code;
 

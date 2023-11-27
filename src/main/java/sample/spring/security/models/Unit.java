@@ -18,11 +18,8 @@ import java.util.Set;
 @Entity
 @Table(name="units")
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,45 +29,36 @@ public class Unit implements Serializable {
     @Column(unique = true, length = 8, columnDefinition = "char(8)", nullable = false)
     @Length(max = 8)
     private String unitKey;
-
+    @Column(length = 8, columnDefinition = "char(8)")
+    @Length(max = 8)
     private Integer oldNumber;
     @NotNull
     private String description;
-    private String unitType;
-    private Integer toFloor;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date blockingDate;
     private String blockingReason;
-    private String fixture;
     private String salesPhase;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date constructionDate;
-    private String destination;
-    private String orientation;
-    private String builtUpArea;
-    private String gardenArea;
-    @NotNull
-    @Range(min = 1)
-    @JsonProperty("no_of_rooms")
-    private Integer numberOfRooms;
-    private Integer measurementValue;
-    private Integer measurements;
-    private Integer measurementsID;
-    private String measurementsDescription;
-    private String unitOfMeasurement;
-    private Integer pricingTab;
-    private String pricePlan;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date unitDeliveryDate;
+    private String area;
+    private Integer areaValue;
+    private Integer noOfRooms;
     private Integer price;
-    private Integer unitAdditionalPayment;
-    private String conditionCode;
-    private String conditionDescription;
-    private Integer Amount;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date validFrom;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "building_code", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("building_code")
     private Building building;
+
+//    public Unit() {
+//
+//    }
+
 
     public Long getUnit_code() {
         return unit_code;
@@ -87,6 +75,7 @@ public class Unit implements Serializable {
     public void setUnitKey(String unitKey) {
         this.unitKey = unitKey;
     }
+
     public Integer getOldNumber() {
         return oldNumber;
     }
@@ -103,31 +92,6 @@ public class Unit implements Serializable {
         this.description = description;
     }
 
-    public String getUnitType() {
-        return unitType;
-    }
-
-    public void setUnitType(String unitType) {
-        this.unitType = unitType;
-    }
-
-
-    public Integer getToFloor() {
-        return toFloor;
-    }
-
-    public void setToFloor(Integer toFloor) {
-        this.toFloor = toFloor;
-    }
-
-    public String getBlockingReason() {
-        return blockingReason;
-    }
-
-    public void setBlockingReason(String blockingReason) {
-        this.blockingReason = blockingReason;
-    }
-
     public Date getBlockingDate() {
         return blockingDate;
     }
@@ -136,12 +100,12 @@ public class Unit implements Serializable {
         this.blockingDate = blockingDate;
     }
 
-    public String getFixture() {
-        return fixture;
+    public String getBlockingReason() {
+        return blockingReason;
     }
 
-    public void setFixture(String fixture) {
-        this.fixture = fixture;
+    public void setBlockingReason(String blockingReason) {
+        this.blockingReason = blockingReason;
     }
 
     public String getSalesPhase() {
@@ -160,100 +124,45 @@ public class Unit implements Serializable {
         this.constructionDate = constructionDate;
     }
 
-    public String getDestination() {
-        return destination;
+    public Date getUnitDeliveryDate() {
+        return unitDeliveryDate;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setUnitDeliveryDate(Date unitDeliveryDate) {
+        this.unitDeliveryDate = unitDeliveryDate;
     }
 
-    public String getOrientation() {
-        return orientation;
+    @JsonBackReference
+    public Building getBuilding() {
+        return building;
+    }
+    @JsonBackReference
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
-    public void setOrientation(String orientation) {
-        this.orientation = orientation;
+    public String getArea() {
+        return area;
     }
 
-    public String getBuiltUpArea() {
-        return builtUpArea;
+    public void setArea(String area) {
+        this.area = area;
     }
 
-    public void setBuiltUpArea(String builtUpArea) {
-        this.builtUpArea = builtUpArea;
+    public Integer getAreaValue() {
+        return areaValue;
     }
 
-    public String getGardenArea() {
-        return gardenArea;
+    public void setAreaValue(Integer areaValue) {
+        this.areaValue = areaValue;
     }
 
-    public void setGardenArea(String gardenArea) {
-        this.gardenArea = gardenArea;
+    public Integer getNoOfRooms() {
+        return noOfRooms;
     }
 
-    public Integer getNumberOfRooms() {
-        return numberOfRooms;
-    }
-
-    public void setNumberOfRooms(Integer numberOfRooms) {
-        this.numberOfRooms = numberOfRooms;
-    }
-
-    public Integer getMeasurementValue() {
-        return measurementValue;
-    }
-
-    public void setMeasurementValue(Integer measurementValue) {
-        this.measurementValue = measurementValue;
-    }
-
-    public Integer getMeasurements() {
-        return measurements;
-    }
-
-    public void setMeasurements(Integer measurements) {
-        this.measurements = measurements;
-    }
-
-    public Integer getMeasurementsID() {
-        return measurementsID;
-    }
-
-    public void setMeasurementsID(Integer measurementsID) {
-        this.measurementsID = measurementsID;
-    }
-
-    public String getMeasurementsDescription() {
-        return measurementsDescription;
-    }
-
-    public void setMeasurementsDescription(String measurementsDescription) {
-        this.measurementsDescription = measurementsDescription;
-    }
-
-    public String getUnitOfMeasurement() {
-        return unitOfMeasurement;
-    }
-
-    public void setUnitOfMeasurement(String unitOfMeasurement) {
-        this.unitOfMeasurement = unitOfMeasurement;
-    }
-
-    public Integer getPricingTab() {
-        return pricingTab;
-    }
-
-    public void setPricingTab(Integer pricingTab) {
-        this.pricingTab = pricingTab;
-    }
-
-    public String getPricePlan() {
-        return pricePlan;
-    }
-
-    public void setPricePlan(String pricePlan) {
-        this.pricePlan = pricePlan;
+    public void setNoOfRooms(Integer noOfRooms) {
+        this.noOfRooms = noOfRooms;
     }
 
     public Integer getPrice() {
@@ -264,44 +173,12 @@ public class Unit implements Serializable {
         this.price = price;
     }
 
-    public Integer getUnitAdditionalPayment() {
-        return unitAdditionalPayment;
+    public Date getValidFrom() {
+        return validFrom;
     }
 
-    public void setUnitAdditionalPayment(Integer unitAdditionalPayment) {
-        this.unitAdditionalPayment = unitAdditionalPayment;
-    }
-
-    public String getConditionCode() {
-        return conditionCode;
-    }
-
-    public void setConditionCode(String conditionCode) {
-        this.conditionCode = conditionCode;
-    }
-
-    public String getConditionDescription() {
-        return conditionDescription;
-    }
-
-    public void setConditionDescription(String conditionDescription) {
-        this.conditionDescription = conditionDescription;
-    }
-
-    public Integer getAmount() {
-        return Amount;
-    }
-
-    public void setAmount(Integer amount) {
-        Amount = amount;
-    }
-    @JsonBackReference
-    public Building getBuilding() {
-        return building;
-    }
-    @JsonBackReference
-    public void setBuilding(Building building) {
-        this.building = building;
+    public void setValidFrom(Date validFrom) {
+        this.validFrom = validFrom;
     }
 
     @Override
@@ -311,30 +188,17 @@ public class Unit implements Serializable {
                 ", unitKey='" + unitKey + '\'' +
                 ", oldNumber=" + oldNumber +
                 ", description='" + description + '\'' +
-                ", unitType='" + unitType + '\'' +
-                ", toFloor=" + toFloor +
                 ", blockingDate=" + blockingDate +
                 ", blockingReason='" + blockingReason + '\'' +
-                ", fixture='" + fixture + '\'' +
                 ", salesPhase='" + salesPhase + '\'' +
                 ", constructionDate=" + constructionDate +
-                ", destination='" + destination + '\'' +
-                ", orientation='" + orientation + '\'' +
-                ", builtUpArea='" + builtUpArea + '\'' +
-                ", gardenArea='" + gardenArea + '\'' +
-                ", numberOfRooms=" + numberOfRooms +
-                ", measurementValue=" + measurementValue +
-                ", measurements=" + measurements +
-                ", measurementsID=" + measurementsID +
-                ", measurementsDescription='" + measurementsDescription + '\'' +
-                ", unitOfMeasurement='" + unitOfMeasurement + '\'' +
-                ", pricingTab=" + pricingTab +
-                ", pricePlan='" + pricePlan + '\'' +
+                ", unitDeliveryDate=" + unitDeliveryDate +
+                ", area='" + area + '\'' +
+                ", areaValue=" + areaValue +
+                ", noOfRooms=" + noOfRooms +
                 ", price=" + price +
-                ", unitAdditionalPayment=" + unitAdditionalPayment +
-                ", conditionCode='" + conditionCode + '\'' +
-                ", conditionDescription='" + conditionDescription + '\'' +
-                ", Amount=" + Amount +
+                ", validFrom=" + validFrom +
+                ", building=" + building +
                 '}';
     }
 }

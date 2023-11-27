@@ -27,13 +27,10 @@ public class UnitPostController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private final UnitRepository unitrepository;
     private UnitService unitService;
 
-    public UnitPostController(UnitRepository unitrepository, UnitService unitService) {
+    public UnitPostController(UnitService unitService) {
         super();
-        this.unitrepository = unitrepository;
         this.unitService = unitService;
     }
 
@@ -89,11 +86,11 @@ public class UnitPostController {
         return ResponseEntity.ok().body(unitResponse);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/units/search")
-    @ResponseBody
-    public List<Unit> Search(@RequestParam String keyword) {
-
-        return unitrepository.search(keyword);
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/units/search")
+//    @ResponseBody
+//    public List<Unit> Search(@RequestParam String keyword) {
+//
+//        return unitrepository.search(keyword);
+//    }
 
 }

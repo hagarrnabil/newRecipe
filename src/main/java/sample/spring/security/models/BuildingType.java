@@ -1,10 +1,16 @@
 package sample.spring.security.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "buildingType")
 public class BuildingType implements Serializable {
@@ -18,6 +24,7 @@ public class BuildingType implements Serializable {
     private String buildingTypeID;
     @NotNull
     private String buildTypeDesc;
+
 
     public BuildingType() {
     }

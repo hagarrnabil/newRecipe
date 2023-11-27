@@ -63,17 +63,42 @@ public class SecurityConfiguration {
 //                                .requestMatchers("/unitview/*").hasAuthority("Read")
 //                                .requestMatchers("/unitfloor/*").hasAuthority("Read")
 //                                .requestMatchers("/buildingtype/*").hasAuthority("Read")
+//                                .requestMatchers("/buildings/*").hasAuthority("Read")
+//                                .requestMatchers("/profit/*").hasAuthority("Read")
+//                                .requestMatchers("/fixture/*").hasAuthority("Read")
+//                                .requestMatchers("/orientation/*").hasAuthority("Read")
+//                                .requestMatchers("/uom/*").hasAuthority("Read")
+//                                .requestMatchers("/unitType/*").hasAuthority("Read")
+//                                .requestMatchers("/moc/*").hasAuthority("Read")
+//                                .requestMatchers("/currency/*").hasAuthority("Read")
+//                                .requestMatchers("/priceType/*").hasAuthority("Read")
 //                                .requestMatchers("/*").authenticated()
 //                                .anyRequest().denyAll())
 //                .oauth2ResourceServer()
 //                .jwt()
 //                .jwtAuthenticationConverter(new MyCustomHybridTokenAuthenticationConverter()); // Adjust the converter to represent your use case
-        // Use MyCustomHybridTokenAuthenticationConverter when IAS and XSUAA is used
-        // Use MyCustomIasTokenAuthenticationConverter when only IAS is used
-        // @formatter:on
+////         Use MyCustomHybridTokenAuthenticationConverter when IAS and XSUAA is used
+////         Use MyCustomIasTokenAuthenticationConverter when only IAS is used
+////         @formatter:on
 //        return http.build();
+//        http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest()
+//                        .permitAll());
+//        http.csrf(csrf -> csrf.disable());
+//        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+//        return http.build();
+        http.authorizeRequests(authorizeRequests-> {
+                    try {
+                        authorizeRequests.requestMatchers("/projetcs/**").permitAll()
+                                .and().csrf().ignoringRequestMatchers("/projects/**")
+                                .and().headers().frameOptions().sameOrigin();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+        );
         http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest()
-                        .permitAll());
+                .permitAll());
+
         http.csrf(csrf -> csrf.disable());
         return http.build();
     }
